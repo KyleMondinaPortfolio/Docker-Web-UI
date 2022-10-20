@@ -1,52 +1,33 @@
-const http = require('http');
-const fs = require("fs");
-const path = require("path");
-const { Server } = require("socket.io");
+const express = require("express");
+const socket = require("socket.io");
 const { exec } = require("child_process");
-const port = 3000;
 
-const getContentType = (url) => {
-	switch (path.extname(url)){
-		case ".html":
-			return "text/html";
-		case ".css":
-			return "text/css";
-		case ".js":
-			return "text/javascript";
-	}
-}
+//Set up the http server
+const PORT = 3000;
+const app = express();
+const server = app.listen(PORT, ()=>{
+	console.log(`Server Running: listening on port ${PORT}`);
+});
+app.use(express.static("static"));
 
-/*const sendResponse = (url, contentType, res) => {
-	let file = path.
-}*/
-
-const server = http.createServer((req,res)=>{
-	console.log("request made, attempting to fetch: " + req.url);
-	let file = path.join(process.cwd(), "./static");
-	file = path.join(file,req.url);
-	//console.log("server attempting to open: " + file);
-	const contentType = getContentType(req.url);
-	fs.readFile(file,(err,content) => {
-		if (err){
-			res.writeHead(404);
-			res.write(`File '${file}'not Found`);
-			res.end();
-			console.log("response 404, file not found");
-		}
-		else{
-			res.writeHead(200, { "Content-Type": contentType});
-			res.write(content);
-			res.end();
-			console.log("response: 200, file found");
-		}
-	});
-
+//set up io socket
+const io = socket(server,{
+	cors:{
+		origin:"http://localhost:3000",
+		methods:["GET", "POST"],
+		transports:['websocket', 'polling'],
+		credentials:true
+	},
+	allowEIO3:true
 });
 
-const io = new Server(server);
-io.on('connection', (socket) =>{
-	console.log("a user connected");
-	exec(" sudo docker ps", (error, stdout, stderr)=>{
+//socket io logic
+io.on("connection", (socket)=>{
+	console.log(`socket ${socket.id} established a connection`);
+	socket.on("button-clicked", (msg)=>{
+		console.log("button has been clicked");
+	});
+/*	exec(" sudo docker ps", (error, stdout, stderr)=>{
 		if (error){
 			console.log("error: " + error.message);
 		}
@@ -55,12 +36,9 @@ io.on('connection', (socket) =>{
 		}
 		console.log(stdout);
 	});
+	*/
+
+
 
 });
-
-server.listen(port,'localhost',()=>{
-	console.log('listening for requests on port: ' + port);
-
-});
-
 

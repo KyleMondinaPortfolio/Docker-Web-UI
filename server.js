@@ -24,19 +24,21 @@ const io = socket(server,{
 //socket io logic
 io.on("connection", (socket)=>{
 	console.log(`socket ${socket.id} established a connection`);
-	socket.on("button-clicked", (msg)=>{
+	socket.on("display-containers", (msg)=>{
 		console.log("button has been clicked");
+		exec(" sudo docker ps", (error, stdout, stderr)=>{
+			if (error){
+				console.log("error: " + error.message);
+			}
+			if(stderr){
+				console.log("stderr: " + stderr);
+			}
+			console.log(stdout.toString());
+			io.emit("container-data",stdout.toString());
+		});
+
 	});
-/*	exec(" sudo docker ps", (error, stdout, stderr)=>{
-		if (error){
-			console.log("error: " + error.message);
-		}
-		if(stderr){
-			console.log("stderr: " + stderr);
-		}
-		console.log(stdout);
-	});
-	*/
+	
 
 
 

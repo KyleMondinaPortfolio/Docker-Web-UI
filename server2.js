@@ -1,5 +1,6 @@
 const express = require("express");
 const socket = require("socket.io");
+const { exec } = require("child_process");
 
 const PORT = 3000;
 const app = express();
@@ -22,10 +23,22 @@ const io = socket(server,{
 		transports:['websocket', 'polling'],
 		credentials:true
 	},
-	allowEIO3:true;
+	allowEIO3:true
 });
 
 io.on("connection", (socket)=>{
 	console.log("made socket connection");
+	exec(" sudo docker ps", (error, stdout, stderr)=>{
+		if (error){
+			console.log("error: " + error.message);
+		}
+		if(stderr){
+			console.log("stderr: " + stderr);
+		}
+		console.log(stdout);
+	});
+
+
+
 });
 

@@ -26,7 +26,7 @@ io.on("connection", (socket)=>{
 	console.log(`socket ${socket.id} established a connection`);
 	socket.on("display-containers", (msg)=>{
 		console.log("button has been clicked");
-		exec(" sudo docker ps", (error, stdout, stderr)=>{
+		exec(" sudo docker ps  --format '{{.ID}},{{.Names}},{{.Image}},{{.Status}}'", (error, stdout, stderr)=>{
 			if (error){
 				console.log("error: " + error.message);
 			}

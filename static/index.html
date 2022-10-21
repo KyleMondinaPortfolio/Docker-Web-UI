@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 	<head>
+		<link rel="stylesheet" href="styles.css">
 		<script src = "https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.js"></script>
 	</head>
 
@@ -8,8 +9,8 @@
 		<div id = "root">
 			<h1>Docker Web UI<h1>
 			<button id ="display-containers">Display Containers</button>
-			<h5 id = "container-labels"></h5>
-			<h5 id = "containers"></h5>
+			<div id = "docker-information">
+			</div>
 		</div>
 		<script src="client.js"></script>
 	</body>

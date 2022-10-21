@@ -1,6 +1,12 @@
 const express = require("express");
 const socket = require("socket.io");
 const { exec } = require("child_process");
+const { Docker } = require("node-docker-api");
+const docker = new Docker({socketPath:'/var/run/docker.sock'});
+/*const docker = new Docker({
+	host:'localhost',
+	port:3000
+});*/
 
 //Set up the http server
 const PORT = 3000;
@@ -29,7 +35,7 @@ const docker_ps = ()=>{
 		if(stderr){
 			console.log("stderr: " + stderr);
 		}
-		console.log(stdout.toString());
+		//console.log(stdout.toString());
 		io.emit("container-data",stdout.toString());
 	});
 
@@ -38,6 +44,7 @@ const docker_ps = ()=>{
 //socket io logic
 io.on("connection", (socket)=>{
 	console.log(`socket ${socket.id} established a connection`);
+	docker.container.list().then(containers=>console.log(containers));
 	socket.on("display-containers", (msg)=>{
 		console.log("button has been clicked");
 		docker_ps();

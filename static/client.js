@@ -1,15 +1,15 @@
 const socket = io();
 const button = document.getElementById('display-containers');
 const docker_information = document.getElementById('docker-information');
-//const container_labels = document.getElementById('container-labels');
-//const containers = document.getElementById('containers');
 
 button.addEventListener("click", (e)=>{
 	e.preventDefault();
 	socket.emit("display-containers");
 });
 
-const createTableHeaders = (table,labels)=>{
+const createTableHeaders = (table)=>{
+	const container_action = document.createElement("th");
+	container_action.innerHTML = "ACTION";
 	const container_id = document.createElement("th");
 	container_id.innerHTML = "CONTAINER ID";
 	const container_name = document.createElement("th");
@@ -18,11 +18,33 @@ const createTableHeaders = (table,labels)=>{
 	container_image.innerHTML= "IMAGE";
 	const container_status = document.createElement("th");
 	container_status.innerHTML= "STATUS";
+	table.appendChild(container_action);
 	table.appendChild(container_id);
 	table.appendChild(container_name);
 	table.appendChild(container_image);
 	table.appendChild(container_status);
 
+}
+
+const createTableRows = (table, lines)=>{
+	for (let i = 0; i<=lines.length-2; i++){
+		const table_row = document.createElement("tr");
+		const data = lines[i].split(',');
+		const stopProcess = document.createElement("td");
+		stopProcess.innerHTML = "Stop"
+		stopProcess.addEventListener('click', (e)=>{
+			e.preventDefault();
+			socket.emit('stop-container',data[0]);
+			console.log(data[0]);
+		})
+		table_row.appendChild(stopProcess);
+		for (let j = 0; j<=data.length-1; j++){
+			const table_data = document.createElement("td");
+			table_data.innerHTML = data[j];
+			table_row.appendChild(table_data);
+		}
+		table.appendChild(table_row);
+	}
 }
 
 socket.on("container-data", (data)=>{
@@ -32,7 +54,8 @@ socket.on("container-data", (data)=>{
 		//create the new updated table
 		const table = document.createElement("table");
 		table.setAttribute("id", "table");
-		createTableHeaders(table,lines[0]);
+		createTableHeaders(table);
+		createTableRows(table,lines);
 		//check if a table exists, if so, call replace instead of append
 		const outdated_table = document.getElementById("table");
 		if (outdated_table){
@@ -65,32 +88,6 @@ socket.on("container-data", (data)=>{
 	}
 	console.log(lines);
 	console.log(lines.length);
-	/*if (lines.length>2){
-		//there are running processeses
-		const container_labels = document.createElement("p");
-		container_labels.innerHTML = lines[0];
-		const container_headers = lines[1].split("   ");
-		const container_headers1 = lines[1].split("\v");
-		const container_headers2 = lines[1].split("\n");
-		const container_headers3 = lines[0].split("       ");
-		console.log(container_headers.length);
-		console.log(container_headers);
-		console.log(container_headers1);
-		console.log(container_headers2);
-		console.log(container_headers3);
-		docker_information.appendChild(container_labels);
-		for (let i = 1; i<= lines.length-1; i++){
-			const table_row = document.createElement("tr");
-			table_row.innerHTML = lines[i];
-			table.appendChild(table_row);
-		}
-		docker_information.appendChild(table);
-	}else{
-		//there are no running processes
-		const blank_display = document.createElement("p");
-		blank_display.innerHTML = "There are currently no containers running";
-		docker_information.appendChild(blank_display);
-	}*/
 })
 
 

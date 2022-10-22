@@ -2,12 +2,33 @@ const socket = io();
 const button = document.getElementById('display-containers');
 const docker_information = document.getElementById('docker-information');
 
+//temporary
 button.addEventListener("click", (e)=>{
 	e.preventDefault();
-	socket.emit("display-containers");
+	socket.emit("request-containers");
 });
 
-const createTableHeaders = (table)=>{
+const createContainersTable = () =>{
+	const table = document.createElement("table");
+	table.setAttribute("id","containers_table");
+	const container_id = document.createElement("th");
+	const container_name = document.createElement("th");
+	const container_image = document.createElement("th");
+	const container_status = document.createElement("th");
+	const container_state= document.createElement("th");
+	container_id.innerHTML = "ID";
+	container_name.innerHTML = "NAME";
+	container_image.innerHTML = "IMAGE";
+	container_status.innerHTML = "STATUS";
+	container_state.innerHTML = "STATE";
+	table.appendChild(container_id);
+	table.appendChild(container_name);
+	table.appendChild(container_image);
+	table.appendChild(container_status);
+	table.appendChild(container_state);
+	return table;
+}
+/*const createTableHeaders = (table)=>{
 	const container_action = document.createElement("th");
 	container_action.innerHTML = "ACTION";
 	const container_id = document.createElement("th");
@@ -45,49 +66,42 @@ const createTableRows = (table, lines)=>{
 		}
 		table.appendChild(table_row);
 	}
-}
+}*/
 
-socket.on("container-data", (data)=>{
+socket.on("containers-sent", (containers)=>{
 	button.innerHTML = "Update Container Statuses";
-	let lines = data.split("\n");
-	if (lines.length>1){
-		//create the new updated table
-		const table = document.createElement("table");
-		table.setAttribute("id", "table");
-		createTableHeaders(table);
-		createTableRows(table,lines);
-		//check if a table exists, if so, call replace instead of append
-		const outdated_table = document.getElementById("table");
-		if (outdated_table){
-			docker_information.replaceChild(table,outdated_table);
+	if (containers.length>=1){
+		//there are containers running
+		const containers_table = createContainersTable();
+		const existing_table = document.getElementById("containers_table");
+		if (existing_table){
+			docker_information.replaceChild(containers_table,existing_table);
 		}else{
-			const prev_containers = document.getElementById("no_containers");
-			if(prev_containers){
-				docker_information.replaceChild(table,prev_containers);
+			const no_containers = document.getElementById("no_containers");
+			if(no_containers){
+				docker_information.replaceChild(containers_table,no_containers);
 			}else{
-				docker_information.appendChild(table);
+				docker_information.appendChild(containers_table);
 			}
 		}
-	}
-	else{
-		//there are no running containers
-		const prev_containers = document.getElementById("no_containers");
-		const table = document.getElementById("table");
+
+	}else{
+		//there are no containers running
+		const existing_no_containers = document.getElementById("no_containers");
+		const containers_table = document.getElementById("containers_table");
 		const no_containers = document.createElement("h3");
 		no_containers.innerHTML = "There are no containers running";
-		no_containers.setAttribute("id","no_containers");
-		if(prev_containers){
-			docker_information.replaceChild(no_containers,prev_containers);
+		no_containers.setAttribute("id", "no_containers");
+		if (existing_no_containers){
+			docker_information.replaceChild(no_containers,existing_no_containers);
 		}else{
 			docker_information.appendChild(no_containers);
 		}
-		if (table){
-			docker_information.replaceChild(no_containers,table);
+		if(containers_table){
+			docker_information.replaceChild(no_containers,containers_table);
 		}
 
 	}
-	console.log(lines);
-	console.log(lines.length);
 })
 
 

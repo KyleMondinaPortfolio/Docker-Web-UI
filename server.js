@@ -24,7 +24,28 @@ const io = socket(server,{
 });
 
 const send_containers = ()=>{
-	docker.listContainers((err,containers)=>{
+	docker.listContainers({all:"true"},(err,containers)=>{
+		io.emit("containers-sent",containers);
+	});
+}
+const start_container = (id)=>{
+	const container = docker.getContainer(id);
+	container.start((err,data)=>{console.log(data)})
+	docker.listContainers({all:"true"},(err,containers)=>{
+		io.emit("containers-sent",containers);
+	});
+}
+const stop_container = (id)=>{
+	const container = docker.getContainer(id);
+	container.stop((err,data)=>{console.log(data)})
+	docker.listContainers({all:"true"},(err,containers)=>{
+		io.emit("containers-sent",containers);
+	});
+}
+const delete_container = (id)=>{
+	const container = docker.getContainer(id);
+	container.remove((err,data)=>{console.log(data)})
+	docker.listContainers({all:"true"},(err,containers)=>{
 		io.emit("containers-sent",containers);
 	});
 }
@@ -35,5 +56,8 @@ const send_containers = ()=>{
 io.on("connection", (socket)=>{
 	console.log(`socket ${socket.id} established a connection`);
 	socket.on("request-containers",send_containers);
+	socket.on("start-container",start_container);
+	socket.on("stop-container",stop_container);
+	socket.on("delete-container",delete_container);
 });
 

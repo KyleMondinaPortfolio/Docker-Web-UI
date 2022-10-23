@@ -1,20 +1,13 @@
 const socket = io();
-const button = document.getElementById('display-containers');
 const docker_information = document.getElementById('docker-information');
 
-//temporary
-button.addEventListener("click", (e)=>{
-	e.preventDefault();
-	socket.emit("request-containers");
-});
 setInterval(()=>{
 	socket.emit("request-containers");
-},2000);
+},1000);
 
 
 
 socket.on("containers-sent", (containers)=>{
-	button.innerHTML = "Update Container Statuses";
 	if (containers.length>=1){
 		//there are containers running
 		const containers_table = createContainersTable();

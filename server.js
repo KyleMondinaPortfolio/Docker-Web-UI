@@ -6,8 +6,9 @@ const docker = new Docker({socketPath:'/var/run/docker.sock'});
 
 //Set up the http server
 const PORT = 3000;
+const HOST = '0.0.0.0';
 const app = express();
-const server = app.listen(PORT, ()=>{
+const server = app.listen(PORT,HOST, ()=>{
 	console.log(`Server Running: listening on port ${PORT}`);
 });
 app.use(express.static("static"));

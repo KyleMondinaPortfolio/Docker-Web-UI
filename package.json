@@ -1,4 +1,12 @@
+
 {
+  "name":"docker_web_ui",
+  "version":"1.0.0",
+  "author": "Kyle Mondina <kylemondinaportfolio@gmail.com",
+  "main": "server.js",
+  "scripts": {
+     "start":"sudo node server.js"	
+  },
   "dependencies": {
     "dockerode": "^3.3.4",
     "express": "^4.18.2",

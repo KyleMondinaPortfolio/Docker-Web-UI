@@ -1,35 +1,11 @@
-
-import React, {useState, useEffect} from 'react'
-import axios from 'axios'
-
-const extractInfo = (container) => {
-	return {
-		cid:container.Id,
-		cname:container.Names[0],
-		cimage:container.Image,
-		cstate:container.State,
-		cstatus:container.Status,
-	}
-}
+import DisplayContainers from './DisplayContainers.js'
 
 const App = () => {
-
-	const [containers,updateContainers] = useState([])
-	
-	setInterval(()=>{
-		
-		axios("/containers")
-			.then(response => {
-				updateContainers(response.data.map(extractInfo));
-			})
-			.catch(error => console.log(error))
-	},10000);
-	useEffect(()=>{
-		console.log(containers)
-	},[containers])
-	
 	return (
-		<p> Hello World </p>
+		<div id = "app-wrapper">
+			<h1 style = {{color:'maroon'}}>Docker Containers Monitor:</h1>
+			<DisplayContainers></DisplayContainers>
+		</div> 
 	)
 
 }

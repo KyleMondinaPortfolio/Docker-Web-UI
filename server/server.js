@@ -19,6 +19,14 @@ app.get("/containers", (req,res)=>{
 	});
 })
 
+app.get("/containers/:id",(req,res)=>{
+	let rqstedContainer = docker.getContainer(req.params.id)
+	rqstedContainer.inspect((err,data)=>{
+		if (err){ console.log(err)}
+		else{res.json(data)}
+	})
+})
+
 const server = app.listen(PORT,HOST, ()=>{
 	console.log(`${HOST} server Running: listening on port ${PORT}`);
 });

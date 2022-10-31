@@ -1,11 +1,10 @@
-
 {
-  "name":"docker_web_ui",
-  "version":"1.0.0",
+  "name": "docker_web_ui",
+  "version": "1.0.0",
   "author": "Kyle Mondina <kylemondinaportfolio@gmail.com",
   "main": "server.js",
   "scripts": {
-     "start":"sudo node server.js"	
+    "start": "sudo node server.js"
   },
   "dependencies": {
     "dockerode": "^3.3.4",
@@ -13,6 +12,8 @@
     "node-docker-api": "^1.1.22",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "socket.io": "^4.5.3"
+    "react-router-dom": "^6.4.2",
+    "socket.io": "^4.5.3",
+    "stream": "^0.0.2"
   }
 }

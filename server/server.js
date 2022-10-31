@@ -47,9 +47,9 @@ app.get("/containers", (req,res)=>{
 	});
 })
 
-app.get("/containers/:id",(req,res)=>{
+app.get("/containers/:cid",(req,res)=>{
 	res.setHeader('Content-Type', 'text/html');
-	let rqstedContainer = docker.getContainer(req.params.id)
+	let rqstedContainer = docker.getContainer(req.params.cid)
 	//we need to add an error here
 	containerLogs(rqstedContainer,res);
 })

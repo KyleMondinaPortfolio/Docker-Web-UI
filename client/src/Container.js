@@ -1,5 +1,7 @@
 import React from 'react'
+import {Link} from "react-router-dom"
 import './Container.css'
+
 
 const Container = (props) => {
 	const cid = props.container.cid	
@@ -9,7 +11,9 @@ const Container = (props) => {
 	const cstatus = props.container.cstatus
 	return(
 		<tr>
-			<td>{cid}</td>
+			<td>
+				<Link to ={`containerLogs/${cid}`}>{cid}</Link>	
+			</td>
 			<td>{cimage}</td>
 			<td>{cname}</td>
 			<td>{cstate}</td>

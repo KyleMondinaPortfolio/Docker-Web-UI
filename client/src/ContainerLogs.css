@@ -1,0 +1,15 @@
+.container-logs{
+	background-color:#262626;
+	padding:5px;
+	color:white;
+	font-weight:bold;
+}
+
+h3{
+	padding:5px;
+	color:white;
+}
+
+.container-logs-wrapper{
+	background-color:maroon;
+}

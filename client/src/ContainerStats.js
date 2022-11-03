@@ -63,7 +63,7 @@ const ContainerStats = () => {
 		
 	});
 	setInterval(()=>{
-		axios(`http://localhost:5000/container_stats/${cid}`)
+		axios(`/container_stats/${cid}`)
 			.then(response => {
 				//updateContainers(response.data.map(trimContainerData));
 				setData(trimContainerStatsData(response.data));

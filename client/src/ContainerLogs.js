@@ -4,13 +4,14 @@ import {Link} from "react-router-dom"
 import {useParams} from 'react-router-dom';
 import './ContainerLogs.css'
 
+
 const ContainerLogs = ()=>{
 	
 	const {cid} = useParams();
 	const [containerLogs,setContainerLogs]=useState([]);
 	
 	useEffect(()=>{
-		axios(`/containers/${cid}`)
+		axios(`/container_logs/${cid}`)
 			.then(response=>{
 				setContainerLogs(response.data.split('\n'));
 				

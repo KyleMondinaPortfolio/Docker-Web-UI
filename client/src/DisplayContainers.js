@@ -1,7 +1,10 @@
 import React, {useState, useEffect} from 'react'
 import axios from 'axios'
 import ContainerLabels from './ContainerLabels.js'
-import Container from './Container.js'
+//import Container from './Container.js'
+import TableRow from './TableRow.js'
+
+const refresh_time = 500;
 
 const trimContainerData = (container) => {
 	return {
@@ -26,17 +29,18 @@ const DisplayContainers = () => {
 			})
 			.catch(error => console.log(error))
 
-	},10000)
+	},refresh_time)
 
 	return (
-		<div className="Containers">
+		<div id="Containers">
 	
 		{(containers.length===0)
 			?<Loading/>
 			:<table><tbody>
 				<ContainerLabels/>
 				{containers.map((container)=>{
-					return(<Container key = {container.cid} container={container}/>)
+					return(<TableRow key = {container.cid} container={container}/>)
+					//return(<Container key = {container.cid} container={container}/>)
 				})}
 			</tbody></table>
 

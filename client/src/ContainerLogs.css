@@ -1,8 +1,9 @@
 .container-logs{
-	background-color:#262626;
+	background-color:Ivory;
+	border: 1px solid;
+	color:Black;
+	font-weight: bold;
 	padding:5px;
-	color:white;
-	font-weight:bold;
 }
 
 h3{
@@ -11,5 +12,5 @@ h3{
 }
 
 .container-logs-wrapper{
-	background-color:maroon;
+	background-color:gray;
 }

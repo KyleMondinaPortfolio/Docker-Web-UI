@@ -4,7 +4,9 @@ import {
 	Route,
 } from "react-router-dom";
 import DisplayContainers from './DisplayContainers.js'
+import Container from './Container.js'
 import ContainerLogs from './ContainerLogs.js'
+import ContainerStats from './ContainerStats.js'
 
 
 const router = createBrowserRouter([
@@ -13,9 +15,25 @@ const router = createBrowserRouter([
 		element:<DisplayContainers/>,
 	},
 	{
-		path:"/containerLogs/:cid",
-		element:<ContainerLogs/>,
+		path:"/container/:cid",
+		element:<Container/>,
+		children:[
+
+			{
+				path:"",
+				element:<ContainerLogs/>,
+			},
+			{
+				path:"containerLogs/:cid",
+				element:<ContainerLogs/>,
+			},
+			{
+				path:"containerStats/:cid",
+				element:<ContainerStats/>,
+			}
+		]
 	},
+
 ])
 
 const App = () => {

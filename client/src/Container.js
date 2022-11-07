@@ -25,6 +25,7 @@ const Container = (props) => {
 	return(
 		<div id = "Container">
 			<h3>Container {cid}</h3>
+			<Link to ={"/"}>Back to Containers</Link>	
 			<ul>
 				<li><p ><Link className = "link" to ={`containerLogs/${cid}`}>Logs</Link></p></li>	
 				<li><p ><Link className = "link" to ={`containerStats/${cid}`}>Stats</Link></p></li>	

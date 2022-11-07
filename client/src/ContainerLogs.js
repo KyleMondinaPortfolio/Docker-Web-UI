@@ -22,8 +22,6 @@ const ContainerLogs = ()=>{
 
 	return(
 		<div className ="container-logs-wrapper">
-		<h3>{"logs for container " + cid}</h3>
-
 		{(containerLogs.length===0)
 			?<p>loading...</p>
 			:<div className="container-logs">
@@ -34,9 +32,6 @@ const ContainerLogs = ()=>{
 			
 
 		}
-		<Link to ={"/"}>Back to Containers</Link>	
-
-
 		</div>
 	)
 }

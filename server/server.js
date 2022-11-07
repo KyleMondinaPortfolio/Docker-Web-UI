@@ -39,7 +39,7 @@ const containerLogs = (container,res)=>{
 }
 
 
-app.use(express.static("buildv3"));
+app.use(express.static("buildv4"));
 app.use(cors());
 
 app.get("/containers", (req,res)=>{

@@ -1,4 +1,5 @@
 import React ,{useCallback, useState, useEffect} from 'react'
+import {LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend} from 'recharts'
 import axios from 'axios'
 import {useStream} from 'react-fetch-streams'
 import {Link, useParams} from "react-router-dom"
@@ -13,7 +14,6 @@ const trimContainerStatsData = (container_stats)=>{
 		csu:container_stats.cpu_stats.system_cpu_usage,
 		pcsu:container_stats.precpu_stats.system_cpu_usage,
 		oc:container_stats.cpu_stats.online_cpus,
-
 		//memory usage
 		mu: container_stats.memory_stats.usage,
 		//memory cache
@@ -48,6 +48,10 @@ const calculateMemPercent = (stats)=>{
 const ContainerStats = () => {
 	const refresh_time = 1000;
 	const {cid} = useParams();
+	const capacity = 7
+	const [cpuRecords, updateCPURecords] = useState([])
+	const [memRecords, updateMemRecords] = useState([])
+	const [counter, updateCounter] = useState(0)
 	const [data,setData] = useState({
 		//used for cpu percentage calculation
 		ctu:0,
@@ -71,19 +75,40 @@ const ContainerStats = () => {
 			.catch(error => console.log(error))
 
 	},refresh_time)
+
 	useEffect(()=>{
-		console.log(data)
-		console.log("COOOOOOOOKIES");
-		//console.log(trimContainerStatsData(data))
+		if (counter >  capacity){
+			updateCPURecords(oldRecords => oldRecords.slice(1)) 	
+			updateMemRecords(oldRecords => oldRecords.slice(1)) 	
+			updateCPURecords(oldRecords => [...oldRecords,{name:`${counter}`, val:calculateCPUPercent(data)}]) 	
+			updateMemRecords(oldRecords => [...oldRecords,{name:`${counter}`, val:calculateMemPercent(data)}]) 	
+		}else{
+			updateCPURecords(oldRecords => [...oldRecords,{name:`${counter}`, val:calculateCPUPercent(data)}]) 	
+			updateMemRecords(oldRecords => [...oldRecords,{name:`${counter}`, val:calculateMemPercent(data)}]) 	
+		}
+		updateCounter(counter+1)
+		
 	},[data]);
 	return( 		
 		<div>
-		<p>Raw CPU Stats</p>
-		<p>{JSON.stringify(data)}</p>
 		<p>CPU Percentage</p>
 		<p>{calculateCPUPercent(data)}</p>
+		<LineChart width = {730} height = {250} data = {cpuRecords}>
+			<CartesianGrid strokeDasharray = "3 3" />
+			<XAxis dataKey= "name"/>
+			<YAxis type="number" domain={[0,1]}/>
+			<Tooltip/>
+			<Line type="monotone" dataKey = "val" stroke="#8884d8"/>
+		</LineChart>
 		<p>Mem Percentage</p>
 		<p>{calculateMemPercent(data)}</p>
+		<LineChart width = {730} height = {250} data = {memRecords}>
+			<CartesianGrid strokeDasharray = "3 3" />
+			<XAxis dataKey= "name"/>
+			<YAxis type="number" domain={[0,1]}/>
+			<Tooltip/>
+			<Line type="monotone" dataKey = "val" stroke="#8884d8"/>
+		</LineChart>
 		</div>
 	)
 }

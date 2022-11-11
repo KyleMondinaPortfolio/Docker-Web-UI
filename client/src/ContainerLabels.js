@@ -3,13 +3,13 @@ import './ContainerLabels.css'
 
 const ContainerLabels = () => {
 	return(
-	<tr>
+	   <tr>
 			<th>ID</th>
 			<th>Name</th>
 			<th>Image</th>
 			<th>State</th>
 			<th>Status</th>
-	</tr>
+	   </tr>
 	)
 }
 

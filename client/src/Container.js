@@ -1,27 +1,13 @@
 import React from 'react'
-import {
-	createBrowserRouter,
-	RouterProvider,
-	Route,
-} from "react-router-dom";
 import {Link,Outlet} from "react-router-dom"
+import {useParams} from 'react-router-dom';
+
 import ContainerLogs from './ContainerLogs.js'
 import ContainerStats from './ContainerStats.js'
 import './Container.css'
-import {useParams} from 'react-router-dom';
-
-
-
 
 const Container = (props) => {
 	const {cid} = useParams();
-	//const cid = props.container.cid	
-	//const cname = props.container.cname 	
-	//const cimage = props.container.cimage	
-	//const cstate = props.container.cstate 
-	//const cstatus = props.container.cstatus
-
-	//<Link to ={`containerLogs/${cid}`}>{cid}</Link>	
 	return(
 		<div id = "Container">
 			<h3>Container {cid}</h3>

@@ -11,12 +11,18 @@ const ContainerLogs = ()=>{
 	const [containerLogs,setContainerLogs]=useState([]);
 	
 	useEffect(()=>{
-		axios(`/container_logs/${cid}`)
+		
+		//abort controller to clean up fetch request
+		let controller = new AbortController();
+		axios.get(`/container_logs/${cid}`,{signal:controller.signal})
 			.then(response=>{
 				setContainerLogs(response.data.split('\n'));
 				
 			})
 			.catch(error=>console.log(error))
+
+		//clean up function to abort axios fetch when component is unmounted
+		return () => {controller.abort();}
 	},[])
 
 

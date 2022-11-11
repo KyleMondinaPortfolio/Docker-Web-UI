@@ -4,12 +4,15 @@ const  Docker  = require("dockerode");
 const stream = require("stream");
 const cors = require("cors");
 
+const utils = require("./containerDataUtils.js") 
+
 const docker = new Docker({socketPath:'/var/run/docker.sock'});
 
 //Set up the http server
 const PORT = 5000;
 const HOST = '0.0.0.0';
 const app = express();
+
 
 const containerLogs = (container,res)=>{
 	let chunks = "";
@@ -39,7 +42,8 @@ const containerLogs = (container,res)=>{
 }
 
 
-app.use(express.static("buildv4"));
+app.use(express.static("build"));
+//check if this is necessary
 app.use(cors());
 
 app.get("/containers", (req,res)=>{
@@ -47,7 +51,8 @@ app.get("/containers", (req,res)=>{
 		if (err){
 			console.log(err);
 		}else{
-			res.json(containers);
+			res.json(containers.map(utils.trimContainer));
+			//res.json(containers);
 		}
 	});
 })
@@ -65,7 +70,7 @@ app.get("/container_stats/:cid",(req,res)=>{
 	rqstedContainer.stats({stream:false},(err,stats)=>{
 		if(err){console.log(err)}
 		else{
-			res.json(stats);
+			res.json(utils.trimContainerStats(stats));
 		}
 	});
 })

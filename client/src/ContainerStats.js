@@ -24,12 +24,18 @@ const calculateMemPercent = (stats)=>{
 	return mem_percent 
 }
 
+let cpu_usage_init = []
+let mem_usage_init=[]
+for (let i = 0; i<60 ; i++){
+	cpu_usage_init.push({name:`${i}`,val:0});
+	mem_usage_init.push({name:`${i}`,val:0});
+}
 
 const ContainerStats = () => {
 	const {cid} = useParams();
 	const capacity = 60
-	const [cpuRecords, updateCPURecords] = useState([])
-	const [memRecords, updateMemRecords] = useState([])
+	const [cpu_usage, update_cpu_usage] = useState(cpu_usage_init)
+	const [mem_usage, update_mem_usage] = useState(mem_usage_init)
 	const [data,setData] = useState({
 		//used for cpu percentage calculation
 		ctu:0,pctu:0,csu:0,pcsu:0,oc:0,
@@ -44,17 +50,11 @@ const ContainerStats = () => {
 		let timerId = setInterval(()=>{
 			axios.get(`/container_stats/${cid}`, {signal:controller.signal})
 				.then(response => {
-					if (counter >  capacity){
-						console.log("what is coutner from counter > capacity: " + counter)
-						updateCPURecords(oldRecords => oldRecords.slice(1)) 	
-						updateMemRecords(oldRecords => oldRecords.slice(1)) 	
-						updateCPURecords(oldRecords => [...oldRecords,{name:`${counter}`, val:calculateCPUPercent(response.data)}]) 	
-						updateMemRecords(oldRecords => [...oldRecords,{name:`${counter}`, val:calculateMemPercent(response.data)}]) 	
-					}else{
-						console.log("what is coutner from counter <= capacity: " + counter)
-						updateCPURecords(oldRecords => [...oldRecords,{name:`${counter}`, val:calculateCPUPercent(response.data)}]) 	
-						updateMemRecords(oldRecords => [...oldRecords,{name:`${counter}`, val:calculateMemPercent(response.data)}]) 	
-					}
+					console.log(counter + " " + calculateCPUPercent(response.data))
+					update_cpu_usage(old_cpu_usage => old_cpu_usage.slice(1))
+					update_cpu_usage(old_cpu_usage => [...old_cpu_usage, {name:`${counter}`,val:calculateCPUPercent(response.data)}])
+					update_mem_usage(old_mem_usage => old_mem_usage.slice(1))
+					update_mem_usage(old_mem_usage => [...old_mem_usage, {name:`${counter}`,val:calculateMemPercent(response.data)}])
 					counter = counter +1
 				})
 				.catch(error => {
@@ -73,18 +73,18 @@ const ContainerStats = () => {
 		<div>
 		<p>CPU Percentage</p>
 		<p>{calculateCPUPercent(data)}</p>
-		<LineChart width = {730} height = {250} data = {cpuRecords}>
+		<LineChart width = {730} height = {250} data = {cpu_usage}>
 			<CartesianGrid strokeDasharray = "3 3" />
-			<XAxis dataKey= "name"/>
+			<XAxis hide = {true} dataKey= "name"/>
 			<YAxis type="number" domain={[0,1]}/>
 			<Tooltip/>
 			<Line type="monotone" dataKey = "val" stroke="#8884d8"/>
 		</LineChart>
 		<p>Mem Percentage</p>
 		<p>{calculateMemPercent(data)}</p>
-		<LineChart width = {730} height = {250} data = {memRecords}>
+		<LineChart width = {730} height = {250} data = {mem_usage}>
 			<CartesianGrid strokeDasharray = "3 3" />
-			<XAxis dataKey= "name"/>
+			<XAxis hide={true} dataKey= "name"/>
 			<YAxis type="number" domain={[0,1]}/>
 			<Tooltip/>
 			<Line type="monotone" dataKey = "val" stroke="#8884d8"/>

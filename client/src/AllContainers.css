@@ -1,0 +1,18 @@
+.all-containers{
+	flex-direction:column;
+	justify-content:center;
+	display:flex;
+	flex-grow:1;
+}
+
+.all-containers-header{
+	flex-grow:1;
+}
+.all-containers h3{
+	font-weight:bold;
+}
+
+.all-containers-table{
+	flex-grow:4;
+}
+

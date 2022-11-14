@@ -1,0 +1,20 @@
+.app-wrapper{
+	display:flex;
+	flex-direction:column;
+}
+.app-header {
+	background-color:#C03221;
+	flex-grow:1;
+	padding:20px;
+}
+.app-header h1{
+	font-weight: bold;
+	color:black;
+}
+
+.app-content{
+	display:flex;
+	flex-grow:4;
+	justify-content:center;	
+	padding:20px;
+}

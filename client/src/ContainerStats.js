@@ -71,20 +71,18 @@ const ContainerStats = () => {
 
 	return( 		
 		<div>
-		<p>CPU Percentage</p>
-		<p>{calculateCPUPercent(data)}</p>
+		<p>CPU Usage Percentage</p>
 		<LineChart width = {730} height = {250} data = {cpu_usage}>
 			<CartesianGrid strokeDasharray = "3 3" />
-			<XAxis hide = {true} dataKey= "name"/>
+			<XAxis ticks={[60,50,40,30,20,10]} dataKey= "name" label = {{value: "60 seconds", position: 'insideBottomLeft'}}/>
 			<YAxis type="number" domain={[0,1]}/>
 			<Tooltip/>
 			<Line type="monotone" dataKey = "val" stroke="#8884d8"/>
 		</LineChart>
-		<p>Mem Percentage</p>
-		<p>{calculateMemPercent(data)}</p>
+		<p>Memory Usage Percentage</p>
 		<LineChart width = {730} height = {250} data = {mem_usage}>
 			<CartesianGrid strokeDasharray = "3 3" />
-			<XAxis hide={true} dataKey= "name"/>
+			<XAxis ticks = {[60,50,40,30,20,10]} dataKey= "name" label = {{value: "60 seconds", position: 'insideBottomLeft'}}/>
 			<YAxis type="number" domain={[0,1]}/>
 			<Tooltip/>
 			<Line type="monotone" dataKey = "val" stroke="#8884d8"/>

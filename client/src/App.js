@@ -7,6 +7,7 @@ import AllContainers from './AllContainers.js'
 import Container from './Container.js'
 import ContainerLogs from './ContainerLogs.js'
 import ContainerStats from './ContainerStats.js'
+import "./App.css"
 
 
 const router = createBrowserRouter([
@@ -38,9 +39,13 @@ const router = createBrowserRouter([
 
 const App = () => {
 	return (
-		<div id = "app-wrapper">
-			<h1 style = {{color:'maroon'}}>Docker Containers Monitor:</h1>
-			<RouterProvider router = {router} />
+		<div class = "app-wrapper">
+		   <div class = "app-header">
+		      <h1>Docker Containers Monitor:</h1>
+		   </div>
+	           <div class = "app-content">
+		      <RouterProvider router = {router} />
+		   </div>
 		</div> 
 	)
 

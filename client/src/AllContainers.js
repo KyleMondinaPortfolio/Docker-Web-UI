@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react'
 import axios from 'axios'
 import ContainerLabels from './ContainerLabels.js'
 import TableRow from './TableRow.js'
+import './AllContainers.css'
 
 const REFRESH_TIME = 2000;
 
@@ -28,8 +29,12 @@ const AllContainers = () => {
 	},[])
 
 	return (
-		<div id="Containers">
+		<div class="all-containers">
+		<div class = "all-containers-header">
+		 	<h3>Container List</h3>
+		</div>
 	
+		<div class = "all-containers-table">
 		{(containers.length===0)
 			?<Loading/>
 			:<table><tbody>
@@ -40,6 +45,7 @@ const AllContainers = () => {
 			</tbody></table>
 
 		}
+		</div>
 		</div>
 	)
 

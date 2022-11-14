@@ -1,0 +1,42 @@
+.container-wrapper{
+	display:flex;
+	flex-direction:column;
+}
+
+.container-header{
+	background-color:#F2D0A4;
+	flex-grow:1;
+	display:flex;
+	flex-direction:row;
+}
+.container-header h3{
+	color:black;
+}
+
+.container-content{
+	flex-grow:4;
+	display:flex;
+	flex-direction:row;
+}
+
+.container-tab{
+	flex-grow:1;
+	display:flex;
+	flex-direction:column;
+	background-color:#545E75;
+}
+.link-1{
+	flex-grow:1;
+	
+}
+.link-2{
+	flex-grow:1;
+}
+
+.container-router{
+	flex-grow:4;
+}
+
+
+
+

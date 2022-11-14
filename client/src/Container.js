@@ -11,16 +11,16 @@ const Container = (props) => {
 	return(
 		<div class = "container-wrapper">
 			<div class = "container-header">
-			   <Link to ={"/"}>Back</Link>	
+			   <p><Link style = {{textDecoration:'none', color:'black'}} to ={"/"}>Back</Link></p>	
 			   <h3>Container {cid}</h3>
 			</div>
 			<div class = "container-content">
 			   <div class = "container-tab">
 			      <div class = "link-1">
-				<p><Link className = "link" to ={`containerLogs/${cid}`}>Logs</Link></p>
+				<p><Link style = {{textDecoration:'none', color:'white'}} to ={`containerLogs/${cid}`}>Logs</Link></p>
 			      </div>
 			      <div class = "link-2">
-				<p><Link className = "link" to ={`containerStats/${cid}`}>Stats</Link></p>
+				<p><Link style = {{textDecoration:'none', color:'white'}} to ={`containerStats/${cid}`}>Stats</Link></p>
 			      </div>
 			   </div>
 			   <div class = "container-router">

@@ -12,7 +12,7 @@ const TableRow = (props) => {
 	return(
 		<tr>
 			<td>
-				<Link to ={`/container/${cid}`}>{cid}</Link>	
+				<Link style={{textDecoration:'none'}} to ={`/container/${cid}`}>{cid}</Link>	
 			</td>
 			<td>{cimage}</td>
 			<td>{cname}</td>

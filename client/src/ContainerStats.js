@@ -33,6 +33,7 @@ for (let i = 0; i<60 ; i++){
 
 const ContainerStats = () => {
 	const {cid} = useParams();
+	const {cstate} = useParams();
 	const capacity = 60
 	const [cpu_usage, update_cpu_usage] = useState(cpu_usage_init)
 	const [mem_usage, update_mem_usage] = useState(mem_usage_init)
@@ -48,6 +49,7 @@ const ContainerStats = () => {
 		let counter = 0;
 		let controller = new AbortController();
 		let timerId = setInterval(()=>{
+			if (cstate === "running"){
 			axios.get(`/container_stats/${cid}`, {signal:controller.signal})
 				.then(response => {
 					console.log(counter + " " + calculateCPUPercent(response.data))
@@ -60,6 +62,7 @@ const ContainerStats = () => {
 				.catch(error => {
 					console.log(error)
 				})
+			}
 
 		},REFRESH_TIME)
 		return ()=>{
@@ -71,6 +74,7 @@ const ContainerStats = () => {
 
 	return( 		
 		<div class = "container_stats">
+			
 		<p>CPU Usage Percentage</p>
 		<LineChart width = {730} height = {250} data = {cpu_usage}>
 			<CartesianGrid strokeDasharray = "3 3" />

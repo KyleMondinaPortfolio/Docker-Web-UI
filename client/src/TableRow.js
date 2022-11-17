@@ -12,10 +12,10 @@ const TableRow = (props) => {
 	return(
 		<tr>
 			<td>
-				<Link style={{textDecoration:'none'}} to ={`/container/${cid}`}>{cid}</Link>	
+				<Link style={{textDecoration:'none'}} to ={`/container/${cid}/${cstate}`}>{cid}</Link>	
 			</td>
-			<td>{cimage}</td>
 			<td>{cname}</td>
+			<td>{cimage}</td>
 			<td>{cstate}</td>
 			<td>{cstatus}</td>
 		</tr>

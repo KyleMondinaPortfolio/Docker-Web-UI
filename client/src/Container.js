@@ -8,6 +8,7 @@ import './Container2.css'
 
 const Container = (props) => {
 	const {cid} = useParams();
+	const {cstate} = useParams();
 	return(
 		<div class = "container-wrapper">
 			<div class = "container-header">
@@ -17,10 +18,10 @@ const Container = (props) => {
 			<div class = "container-content">
 			   <div class = "container-tab">
 			      <div class = "link-1">
-				<p><Link style = {{textDecoration:'none', color:'white'}} to ={`containerLogs/${cid}`}>Logs</Link></p>
+				<p><Link style = {{textDecoration:'none', color:'white'}} to ={`containerLogs/${cstate}/${cid}`}>Logs</Link></p>
 			      </div>
 			      <div class = "link-2">
-				<p><Link style = {{textDecoration:'none', color:'white'}} to ={`containerStats/${cid}`}>Stats</Link></p>
+				<p><Link style = {{textDecoration:'none', color:'white'}} to ={`containerStats/${cstate}/${cid}`}>Stats</Link></p>
 			      </div>
 			   </div>
 			   <div class = "container-router">

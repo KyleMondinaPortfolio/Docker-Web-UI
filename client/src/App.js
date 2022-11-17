@@ -16,7 +16,7 @@ const router = createBrowserRouter([
 		element:<AllContainers/>,
 	},
 	{
-		path:"/container/:cid",
+		path:"/container/:cid/:cstate",
 		element:<Container/>,
 		children:[
 
@@ -25,11 +25,11 @@ const router = createBrowserRouter([
 				element:<ContainerLogs/>,
 			},
 			{
-				path:"containerLogs/:cid",
+				path:"containerLogs/:cstate/:cid",
 				element:<ContainerLogs/>,
 			},
 			{
-				path:"containerStats/:cid",
+				path:"containerStats/:cstate/:cid",
 				element:<ContainerStats/>,
 			}
 		]

@@ -1,11 +1,15 @@
 .container-logs{
-	height:700px;
-	width:700px;
+	height:5000px;
 	background-color:Ivory;
 	border: 1px solid;
 	color:Black;
 	font-weight: bold;
 	padding:5px;
+	Overflow-y:scroll;
+}
+
+
+.container-logs-wrapper{
 }
 
 h3{

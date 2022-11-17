@@ -3,25 +3,25 @@ import {LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend} from 'rec
 import axios from 'axios'
 import {useStream} from 'react-fetch-streams'
 import {Link, useParams} from "react-router-dom"
-import './TableRow.css'
+import './ContainerStats.css'
 
 const REFRESH_TIME = 1000;
 
 const calculateCPUPercent = (stats) =>{
-	let cpuPercent = 0.0;
+	let cpuPercent = 0.00;
 	let cpuDelta = stats.ctu-stats.pctu;
 	let systemDelta = stats.csu-stats.pcsu;
 	if (systemDelta > 0.0 && cpuDelta > 0.0){
 		cpuPercent = (cpuDelta/systemDelta)*stats.oc*100.0;
 	}
-	return cpuPercent; 
+	return cpuPercent * 100.00; 
 }
 
 const calculateMemPercent = (stats)=>{
-	let mem_percent = 0;
+	let mem_percent = 0.00;
 	let mem_used = stats.mu - stats.mif + stats.maf;
 	mem_percent = mem_used/stats.ml*100.00;
-	return mem_percent 
+	return mem_percent * 100.00; 
 }
 
 let cpu_usage_init = []
@@ -70,22 +70,22 @@ const ContainerStats = () => {
 
 
 	return( 		
-		<div>
+		<div class = "container_stats">
 		<p>CPU Usage Percentage</p>
 		<LineChart width = {730} height = {250} data = {cpu_usage}>
 			<CartesianGrid strokeDasharray = "3 3" />
-			<XAxis ticks={[60,50,40,30,20,10]} dataKey= "name" label = {{value: "60 seconds", position: 'insideBottomLeft'}}/>
-			<YAxis type="number" domain={[0,1]}/>
+			<XAxis tick={false} dataKey= "name" label = {{value: "60 seconds", position: 'insideBottomLeft'}}/>
+			<YAxis type="number" domain={[0.00,100.00]}/>
 			<Tooltip/>
-			<Line type="monotone" dataKey = "val" stroke="#8884d8"/>
+			<Line  isAnimationActive = {false} type="monotone" dataKey = "val" stroke="#8884d8"/>
 		</LineChart>
 		<p>Memory Usage Percentage</p>
 		<LineChart width = {730} height = {250} data = {mem_usage}>
 			<CartesianGrid strokeDasharray = "3 3" />
-			<XAxis ticks = {[60,50,40,30,20,10]} dataKey= "name" label = {{value: "60 seconds", position: 'insideBottomLeft'}}/>
-			<YAxis type="number" domain={[0,1]}/>
+			<XAxis tick = {false} dataKey= "name" label = {{value: "60 seconds", position: 'insideBottomLeft'}}/>
+			<YAxis type="number" domain={[0.00,100.00]}/>
 			<Tooltip/>
-			<Line type="monotone" dataKey = "val" stroke="#8884d8"/>
+			<Line isAnimationActive = {false} type="monotone" dataKey = "val" stroke="#8884d8"/>
 		</LineChart>
 		</div>
 	)

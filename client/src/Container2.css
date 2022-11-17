@@ -55,8 +55,13 @@
 }
 
 .container-router{
-	flex-grow:4;
+	flex-grow:2050;
 }
+.container-router p{
+	font-weight:bold;
+	margin: 50px;
+}
+
 
 
 

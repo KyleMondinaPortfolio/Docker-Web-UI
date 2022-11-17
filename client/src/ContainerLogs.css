@@ -1,4 +1,6 @@
 .container-logs{
+	height:700px;
+	width:700px;
 	background-color:Ivory;
 	border: 1px solid;
 	color:Black;
@@ -11,6 +13,3 @@ h3{
 	color:white;
 }
 
-.container-logs-wrapper{
-	background-color:gray;
-}

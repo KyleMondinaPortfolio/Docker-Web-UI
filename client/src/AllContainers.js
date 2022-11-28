@@ -10,8 +10,20 @@ const Loading = () => {
 	return(<p> Loading ... </p>)
 }
 
+
+
 const AllContainers = () => {
 	const [containers,updateContainers] = useState([])
+	const [selectedContainer, selectContainer] = useState("");
+	const handler = (cid) =>{
+		console.log("i have been called");
+		selectContainer(cid);
+	}
+	
+	useEffect(()=>{
+		console.log(selectedContainer);
+	},[selectedContainer])
+
 	useEffect(()=>{
 		let controller = new AbortController();
 		let timerId = setInterval(()=>{
@@ -40,7 +52,7 @@ const AllContainers = () => {
 			:<table><tbody>
 				<ContainerLabels/>
 				{containers.map((container)=>{
-					return(<TableRow key = {container.cid} container={container}/>)
+					return(<TableRow handler = {handler} key = {container.cid} container={container}/>)
 				})}
 			</tbody></table>
 

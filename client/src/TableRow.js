@@ -9,8 +9,10 @@ const TableRow = (props) => {
 	const cimage = props.container.cimage	
 	const cstate = props.container.cstate 
 	const cstatus = props.container.cstatus
+	const handler = props.handler
 	return(
 		<tr>
+			<td><button onClick = {()=>{handler(cid)}}></button></td>
 			<td>
 				<Link style={{textDecoration:'none'}} to ={`/container/${cid}/${cstate}`}>{cid}</Link>	
 			</td>

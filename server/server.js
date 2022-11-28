@@ -64,6 +64,17 @@ app.get("/container_logs/:cid",(req,res)=>{
 	containerLogs(rqstedContainer,res);
 })
 
+app.get("/container_stats_raw/:cid",(req,res)=>{
+	res.setHeader('Content-Type', 'application/json');
+	let rqstedContainer = docker.getContainer(req.params.cid)
+	rqstedContainer.stats({stream:false},(err,stats)=>{
+		if(err){console.log(err)}
+		else{
+			res.json(stats);
+		}
+	});
+})
+
 app.get("/container_stats/:cid",(req,res)=>{
 	res.setHeader('Content-Type', 'application/json');
 	let rqstedContainer = docker.getContainer(req.params.cid)

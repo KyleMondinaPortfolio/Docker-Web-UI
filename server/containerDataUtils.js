@@ -21,7 +21,10 @@ const trimContainerStats = (container_stats)=>{
 		mu: container_stats.memory_stats.usage,
 		mif:container_stats.memory_stats.stats.inactive_file,
 		maf:container_stats.memory_stats.stats.active_file,
-		ml:container_stats.memory_stats.limit
+		ml:container_stats.memory_stats.limit,
+		//network usage
+		ni: container_stats.networks.eth0.rx_bytes,
+		no: container_stats.networks.eth0.tx_bytes
 		
 	}
 } 

@@ -26,9 +26,11 @@ const calculateMemPercent = (stats)=>{
 
 let cpu_usage_init = []
 let mem_usage_init=[]
+let network_io_init=[]
 for (let i = 0; i<60 ; i++){
 	cpu_usage_init.push({name:`${i}`,val:0});
 	mem_usage_init.push({name:`${i}`,val:0});
+	network_io_init.push({name:`${i}`,input:0,output:0});
 }
 
 const ContainerStats = () => {
@@ -37,11 +39,15 @@ const ContainerStats = () => {
 	const capacity = 60
 	const [cpu_usage, update_cpu_usage] = useState(cpu_usage_init)
 	const [mem_usage, update_mem_usage] = useState(mem_usage_init)
+	const [network_io, update_network_io] = useState(network_io_init)
+	const [raw_data, update_raw_data] = useState([])
 	const [data,setData] = useState({
 		//used for cpu percentage calculation
 		ctu:0,pctu:0,csu:0,pcsu:0,oc:0,
 		//used for memory percentage calculation
-		mu:0,mif:0,maf:0,ml:0
+		mu:0,mif:0,maf:0,ml:0,
+		//used for network
+		ni:0, no:0
 		
 	});
 
@@ -50,13 +56,21 @@ const ContainerStats = () => {
 		let controller = new AbortController();
 		let timerId = setInterval(()=>{
 			if (cstate === "running"){
+			axios.get(`/container_stats_raw/${cid}`, {signal:controller.signal})
+				.then(response => {
+					update_raw_data(old_raw_data => [...old_raw_data, response.data])
+				})
+				.catch(error => {
+					console.log(error);
+				})
 			axios.get(`/container_stats/${cid}`, {signal:controller.signal})
 				.then(response => {
-					console.log(counter + " " + calculateCPUPercent(response.data))
 					update_cpu_usage(old_cpu_usage => old_cpu_usage.slice(1))
 					update_cpu_usage(old_cpu_usage => [...old_cpu_usage, {name:`${counter}`,val:calculateCPUPercent(response.data)}])
 					update_mem_usage(old_mem_usage => old_mem_usage.slice(1))
 					update_mem_usage(old_mem_usage => [...old_mem_usage, {name:`${counter}`,val:calculateMemPercent(response.data)}])
+					update_network_io(old_network_io => old_network_io.slice(1))
+					update_network_io(old_network_io => [...old_network_io, {name:`${counter}`,input:response.data.ni, output:response.data.no}])
 					counter = counter +1
 				})
 				.catch(error => {
@@ -70,6 +84,16 @@ const ContainerStats = () => {
 			controller.abort();
 		}
 	},[])
+
+	const generate_data_sample = ()=>{
+		const fileData = JSON.stringify(raw_data);
+		const blob = new Blob([fileData], {type: "text/plain"});
+		const url = URL.createObjectURL(blob);
+		const link = document.createElement("a");
+		link.download = "data_sample.json";
+		link.href = url;
+		link.click();
+	}
 
 
 	return( 		
@@ -91,6 +115,19 @@ const ContainerStats = () => {
 			<Tooltip/>
 			<Line isAnimationActive = {false} type="monotone" dataKey = "val" stroke="#8884d8"/>
 		</LineChart>
+		<p>Network I/O</p>
+		<LineChart width = {730} height = {250} data = {network_io}>
+			<CartesianGrid strokeDasharray = "3 3" />
+			<XAxis tick = {false} dataKey= "name" label = {{value: "60 seconds", position: 'insideBottomLeft'}}/>
+			<YAxis type="number" domain={[0.00,100000.00]}/>
+			<Tooltip/>
+			<Line isAnimationActive = {false} type="monotone" dataKey = "input" stroke="#8884d8"/>
+			<Line isAnimationActive = {false} type="monotone" dataKey = "output" stroke="#fc0339"/>
+		</LineChart>
+		
+		<button onClick = {()=>{generate_data_sample()}}>Download Container Stats</button>
+		
+		
 		</div>
 	)
 }

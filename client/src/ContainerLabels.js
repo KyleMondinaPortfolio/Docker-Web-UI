@@ -4,6 +4,7 @@ import './ContainerLabels.css'
 const ContainerLabels = () => {
 	return(
 	   <tr>
+			<th>Select</th>
 			<th>ID</th>
 			<th>Name</th>
 			<th>Image</th>

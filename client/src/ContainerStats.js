@@ -7,6 +7,26 @@ import './ContainerStats.css'
 
 const REFRESH_TIME = 1000;
 
+const trimContainerStats = (container_stats)=>{
+	return {
+		//cpu usage
+		ctu:container_stats.cpu_stats.cpu_usage.total_usage,	
+		pctu:container_stats.precpu_stats.cpu_usage.total_usage,
+		csu:container_stats.cpu_stats.system_cpu_usage,
+		pcsu:container_stats.precpu_stats.system_cpu_usage,
+		oc:container_stats.cpu_stats.online_cpus,
+		//memory usage
+		mu: container_stats.memory_stats.usage,
+		mif:container_stats.memory_stats.stats.inactive_file,
+		maf:container_stats.memory_stats.stats.active_file,
+		ml:container_stats.memory_stats.limit,
+		//network usage
+		ni: container_stats.networks.eth0.rx_bytes,
+		no: container_stats.networks.eth0.tx_bytes
+		
+	}
+}
+
 const calculateCPUPercent = (stats) =>{
 	let cpuPercent = 0.00;
 	let cpuDelta = stats.ctu-stats.pctu;
@@ -58,7 +78,15 @@ const ContainerStats = () => {
 			if (cstate === "running"){
 			axios.get(`/container_stats_raw/${cid}`, {signal:controller.signal})
 				.then(response => {
-					update_raw_data(old_raw_data => [...old_raw_data, response.data])
+					const formatted_data = trimContainerStats(response.data);
+					const data = {
+					   cpu_usage:calculateCPUPercent(formatted_data),
+					   mem_usage:calculateMemPercent(formatted_data),
+					   network_i:formatted_data.ni,
+					   network_o:formatted_data.no,
+					};
+					//update_raw_data(old_raw_data => [...old_raw_data, response.data])
+					update_raw_data(old_raw_data => [...old_raw_data, data])
 				})
 				.catch(error => {
 					console.log(error);

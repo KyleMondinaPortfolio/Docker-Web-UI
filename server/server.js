@@ -3,16 +3,13 @@ const socket = require("socket.io");
 const  Docker  = require("dockerode");
 const stream = require("stream");
 const cors = require("cors");
-
-const utils = require("./containerDataUtils.js") 
-
 const docker = new Docker({socketPath:'/var/run/docker.sock'});
+const utils = require("./containerDataUtils.js") 
 
 //Set up the http server
 const PORT = 5000;
 const HOST = '0.0.0.0';
 const app = express();
-
 
 const containerLogs = (container,res)=>{
 	let chunks = "";
@@ -40,7 +37,6 @@ const containerLogs = (container,res)=>{
 		})
 	})
 }
-
 
 app.use(express.static("build"));
 //check if this is necessary
@@ -90,7 +86,38 @@ const server = app.listen(PORT,HOST, ()=>{
 	console.log(`${HOST} server Running: listening on port ${PORT}`);
 });
 
+const io = socket(server, {
+	cors:{
+		origin:"http://localhost:5000",
+		methods:["GET","POST"],
+		transports:['websocket','polling'],
+		credentials:true
+	},
+	allowEIO3:true
+});
 
+const start_container = (cid) => {
+	console.log("start_container");
+	const container = docker.getContainer(cid);
+	container.start((err,data)=>{console.log(data)})
+}
+const stop_container = (cid) => {
+	console.log("stop_container");
+	const container = docker.getContainer(cid);
+	container.stop((err,data)=>{console.log(data)})
+}
+const delete_container = (cid) => {
+	console.log("delete_container");
+	const container = docker.getContainer(cid);
+	container.remove((err,data)=>{console.log(data)})
+}
 
+//const start_container = ()=>{ console.log("start_container");}
+//const stop_container = ()=>{ console.log("stop_container");}
+//const delete_container = ()=>{ console.log("delete_container");}
 
-
+io.on("connection", (socket)=>{
+	socket.on("start_container", (cid)=>{start_container(cid)});
+	socket.on("stop_container", (cid)=>{stop_container(cid)});
+	socket.on("delete_container", (cid)=>{delete_container(cid)});
+});

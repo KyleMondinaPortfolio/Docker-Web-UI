@@ -84,6 +84,7 @@ const TableHeader = ()=>{
 	)
 }
 
+			//<td><button onClick = {()=>{select_container(cid)}}></button></td>
 const TableRow = (props) => {
 	const cid = props.container.cid	
 	const cname = props.container.cname 	
@@ -93,7 +94,7 @@ const TableRow = (props) => {
   const select_container = props.select_container
 	return(
 		<tr>
-			<td><button onClick = {()=>{select_container(cid)}}></button></td>
+      <td><input type="radio" id = {cid} name="optradio" onClick ={()=>{select_container(cid)}}></input></td>
 			<td>
 				<Link style={{textDecoration:'none'}} to ={`/container/${cid}/${cstate}`}>{cid}</Link>	
 			</td>

@@ -7,6 +7,7 @@ import Containers from './Components/Containers.js'
 import Container from './Components/Container.js'
 import ContainerLogs from './Components/ContainerLogs.js'
 import ContainerStats from './Components/ContainerStats.js'
+import Container2Stats from './Components/Container2Stats.js'
 import "./App.css"
 
 
@@ -30,7 +31,7 @@ const router = createBrowserRouter([
 			},
 			{
 				path:"containerStats/:cstate/:cid",
-				element:<ContainerStats/>,
+				element:<Container2Stats/>,
 			}
 		]
 	},

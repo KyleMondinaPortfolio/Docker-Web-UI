@@ -4,6 +4,7 @@ import {useParams} from 'react-router-dom';
 
 import ContainerLogs from './ContainerLogs.js'
 import ContainerStats from './ContainerStats.js'
+import Container2Stats from './Container2Stats.js'
 import './Container.css'
 
 const Container = (props) => {

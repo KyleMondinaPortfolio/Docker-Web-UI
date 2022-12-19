@@ -4,7 +4,7 @@ import {useParams} from 'react-router-dom';
 
 import ContainerLogs from './ContainerLogs.js'
 import ContainerStats from './ContainerStats.js'
-import './Container2.css'
+import './Container.css'
 
 const Container = (props) => {
 	const {cid} = useParams();

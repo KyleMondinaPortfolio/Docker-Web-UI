@@ -3,17 +3,17 @@ import {
 	RouterProvider,
 	Route,
 } from "react-router-dom";
-import AllContainers from './AllContainers.js'
-import Container from './Container.js'
-import ContainerLogs from './ContainerLogs.js'
-import ContainerStats from './ContainerStats.js'
+import Containers from './Components/Containers.js'
+import Container from './Components/Container.js'
+import ContainerLogs from './Components/ContainerLogs.js'
+import ContainerStats from './Components/ContainerStats.js'
 import "./App.css"
 
 
 const router = createBrowserRouter([
 	{
 		path:"/",
-		element:<AllContainers/>,
+		element:<Containers/>,
 	},
 	{
 		path:"/container/:cid/:cstate",

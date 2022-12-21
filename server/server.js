@@ -16,9 +16,9 @@ const containerLogs = (container,res)=>{
 
 	let logStream = new stream.PassThrough();
 	logStream.on('data', (chunk)=>{
-		console.log(chunk.toString('utf8'));
 		chunks = chunks.concat(chunk.toString('utf8'));
 	})
+
 	container.logs({
 		follow:true,
 		stdout:true,
@@ -33,13 +33,12 @@ const containerLogs = (container,res)=>{
 			});
 			res.write(chunks);
 			res.end('-----END OF LOGS-----');
-
 		})
 	})
+
 }
 
 app.use(express.static("build"));
-//check if this is necessary
 app.use(cors());
 
 app.get("/containers", (req,res)=>{
@@ -48,9 +47,19 @@ app.get("/containers", (req,res)=>{
 			console.log(err);
 		}else{
 			res.json(containers.map(utils.trimContainer));
-			//res.json(containers);
 		}
 	});
+})
+
+app.get("/container_info/:cid",(req,res)=>{
+	res.setHeader('Content-Type', 'application/json');
+	let rqstedContainer = docker.getContainer(req.params.cid)
+	rqstedContainer.inspect((err,data)=>{
+    if(err){console.log(err)}
+    else{
+      res.json(data)
+    }
+  })   
 })
 
 app.get("/container_logs/:cid",(req,res)=>{
@@ -97,24 +106,20 @@ const io = socket(server, {
 });
 
 const start_container = (cid) => {
-	console.log("start_container");
+	console.log(`${cid} requested to start`);
 	const container = docker.getContainer(cid);
 	container.start((err,data)=>{console.log(data)})
 }
 const stop_container = (cid) => {
-	console.log("stop_container");
+	console.log(`${cid} requested to stop`);
 	const container = docker.getContainer(cid);
 	container.stop((err,data)=>{console.log(data)})
 }
 const delete_container = (cid) => {
-	console.log("delete_container");
+	console.log(`${cid} requested to be deleted`);
 	const container = docker.getContainer(cid);
 	container.remove((err,data)=>{console.log(data)})
 }
-
-//const start_container = ()=>{ console.log("start_container");}
-//const stop_container = ()=>{ console.log("stop_container");}
-//const delete_container = ()=>{ console.log("delete_container");}
 
 io.on("connection", (socket)=>{
 	socket.on("start_container", (cid)=>{start_container(cid)});

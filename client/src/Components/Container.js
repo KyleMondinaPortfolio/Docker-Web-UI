@@ -10,19 +10,24 @@ import './Container.css'
 const Container = (props) => {
 	const {cid} = useParams();
 	const {cstate} = useParams();
+	const {cname} = useParams();
 	return(
 		<div class = "container-wrapper">
 			<div class = "container-header">
-			   <p><Link style = {{textDecoration:'none', color:'black'}} to ={"/"}>Back</Link></p>	
-			   <h3>Container {cid}</h3>
+			   <p><Link style = {{textDecoration:'none', color:'white'}} to ={"/"}>Back</Link></p>	
+			   <h3>Container {cname}</h3>
 			</div>
 			<div class = "container-content">
 			   <div class = "container-tab">
-			      <div class = "link-1">
-				<p><Link style = {{textDecoration:'none', color:'white'}} to ={`containerLogs/${cstate}/${cid}`}>Logs</Link></p>
+			      <div class = "link-3">
+				      <p><Link style = {{textDecoration:'none', color:'white'}} to ={`containerInfo/${cstate}/${cid}`}>Info</Link></p>
 			      </div>
+			      <div class = "link-1">
+				      <p><Link style = {{textDecoration:'none', color:'white'}} to ={`containerLogs/${cstate}/${cid}`}>Logs</Link></p>
+			      </div>
+
 			      <div class = "link-2">
-				<p><Link style = {{textDecoration:'none', color:'white'}} to ={`containerStats/${cstate}/${cid}`}>Stats</Link></p>
+				      <p><Link style = {{textDecoration:'none', color:'white'}} to ={`containerStats/${cstate}/${cid}`}>Stats</Link></p>
 			      </div>
 			   </div>
 			   <div class = "container-router">

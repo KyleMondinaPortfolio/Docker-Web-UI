@@ -6,6 +6,7 @@ import {
 import Containers from './Components/Containers.js'
 import Container from './Components/Container.js'
 import ContainerLogs from './Components/ContainerLogs.js'
+import ContainerInfo from './Components/ContainerInfo.js'
 import ContainerStats from './Components/ContainerStats.js'
 import Container2Stats from './Components/Container2Stats.js'
 import "./App.css"
@@ -17,13 +18,17 @@ const router = createBrowserRouter([
 		element:<Containers/>,
 	},
 	{
-		path:"/container/:cid/:cstate",
+		path:"/container/:cid/:cstate/:cname",
 		element:<Container/>,
 		children:[
 
 			{
 				path:"",
-				element:<ContainerLogs/>,
+				element:<ContainerInfo/>,
+			},
+			{
+				path:"containerInfo/:cstate/:cid",
+				element:<ContainerInfo/>,
 			},
 			{
 				path:"containerLogs/:cstate/:cid",

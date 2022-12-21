@@ -8,6 +8,7 @@ import './ContainerLogs.css'
 const ContainerLogs = ()=>{
 	
 	const {cid} = useParams();
+	const {cstate} = useParams();
 	const [containerLogs,setContainerLogs]=useState([]);
 	
 	useEffect(()=>{

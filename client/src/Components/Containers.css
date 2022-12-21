@@ -5,28 +5,74 @@
 	flex-grow:1;
 }
 
+.containers h2{
+	flex-grow:1;
+	font-weight:bold;
+  color:var(--color-7);
+}
 .containers h3{
 	flex-grow:1;
 	font-weight:bold;
+  color:var(--color-7);
 }
 
 .containers_table {
 	flex-grow:4;
 }
 
+.container_controls #start_button{
+  background-color:green;
+  color:var(--color-6);
+  padding: 5px 8px;
+  text-align: center;
+  text-decoration: none;
+  display:inline-block;
+  font-size:17px;
+  font-weight:bold;
+  margin:3px;
+}
+.container_controls #stop_button{
+  background-color:red;
+  color:var(--color-6);
+  padding: 5px 8px;
+  text-align: center;
+  text-decoration: none;
+  display:inline-block;
+  font-size:17px;
+  font-weight:bold;
+  margin:3px;
+}
+.container_controls #delete_button{
+  background-color:red;
+  color:var(--color-6);
+  padding: 5px 8px;
+  text-align: center;
+  text-decoration: none;
+  display:inline-block;
+  font-size:17px;
+  font-weight:bold;
+  margin:3px;
+}
+
 tr {
-	background-color:gray;
-	color:white;
+	background-color:var(--color-2);
+	color:var(--color-6);
 	border:7px solid;
 	text-align:center;
+  padding:10px;
 }
 
 td {
-	background-color:Ivory;
+	background-color:var(--color-5);
 	border: 1px solid;
-	color:Black;
+	color:var(--color-7);
 	font-weight: bold;
+  padding:10px;
 	
+}
+
+.container-name:hover{
+	background-color:var(--color-8);
 }
 	
 

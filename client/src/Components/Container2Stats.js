@@ -33,10 +33,11 @@ const Container2Stats = () => {
 					  update_network_io(old_network_io => old_network_io.slice(1))
 					  update_network_io(old_network_io => [...old_network_io, {name:`${counter}`,input:response.data.ni,output:response.data.no}])
             const file_data_entry = {
-					    cpu_usage:calculate_CPU_usage(response.data),
-					    mem_usage:calculate_memory_usage(response.data),
-					    network_i:response.data.ni,
-					    network_o:response.data.no,
+					    cpu_usage:`${calculate_CPU_usage(response.data)}%`,
+					    mem_usage:`${calculate_memory_usage(response.data)}%`,
+					    network_i:`${response.data.ni} bytes`,
+					    network_o:`${response.data.no} bytes`,
+              time: new Date(),
             }
 					  append_file_data(old_file_data => [...old_file_data, file_data_entry])
 					  counter+=1
@@ -67,6 +68,11 @@ const Container2Stats = () => {
 	return( 		
 		<div class = "container_stats">
 			
+		<div class = "container_stats_button">
+		<button onClick = {()=>{generate_data_sample()}}>Download Container Stats</button>
+		</div>
+
+		<div class = "container_stats_graphs">
 		<p>CPU Usage Percentage</p>
 		<LineChart width = {730} height = {250} data = {cpu_usage}>
 			<CartesianGrid strokeDasharray = "3 3" />
@@ -88,12 +94,11 @@ const Container2Stats = () => {
 			<CartesianGrid strokeDasharray = "3 3" />
 			<XAxis tick = {false} dataKey= "name" label = {{value: "60 seconds", position: 'insideBottomLeft'}}/>
 			<YAxis type="number" domain={[0.00,100000.00]}/>
-			<Tooltip/>
+			<Tooltip content = {NetworkToolTip}/>
 			<Line isAnimationActive = {false} type="monotone" dataKey = "input" stroke="#8884d8"/>
 			<Line isAnimationActive = {false} type="monotone" dataKey = "output" stroke="#fc0339"/>
 		</LineChart>
-		
-		<button onClick = {()=>{generate_data_sample()}}>Download Container Stats</button>
+		</div>
 		
 		
 		</div>
@@ -116,6 +121,17 @@ const MemoryToolTip = ({active,payload,label})=>{
     return(
       <div className = "memory_tool_tip">
         <p>{`${payload[0].value}%`}</p>
+      </div>
+    )
+  }
+}
+
+const NetworkToolTip = ({active,payload,label})=>{
+  if (active && payload && payload.length){
+    return(
+      <div className = "memory_tool_tip">
+        <p>{`Input: ${payload[0].value} bytes`}</p>
+        <p>{`Output: ${payload[1].value} bytes`}</p>
       </div>
     )
   }

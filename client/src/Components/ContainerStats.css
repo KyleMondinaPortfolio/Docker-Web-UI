@@ -1,3 +1,26 @@
-.container-stats{
-	height:1000px;
+.container_stats{
+  display:flex;
+  flex-direction:column;
 }
+.container_stats_graphs{
+  flex-grow:1;
+}
+.container_stats_button{
+  flex-grow:1;
+  padding:30px;
+  align-items:center;
+  justify-content:center;
+}
+.container_stats_button button{
+  background-color:var(--color-3);
+  border:none;
+  color:var(--color-6);
+  padding:15px 30px;
+  text-align: center;
+  text-decoration:none;
+  font-size:15px;
+}
+.container_stats_button button:hover{
+  background-color:var(--color-4);
+}
+

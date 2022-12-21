@@ -1,4 +1,4 @@
-.container-logs{
+.container-info{
 	height:500px;
 	background-color:var(--color-5);
 	border: 1px solid;
@@ -9,7 +9,7 @@
 }
 
 
-.container-logs-wrapper{
+.container-info-wrapper{
 }
 
 h3{

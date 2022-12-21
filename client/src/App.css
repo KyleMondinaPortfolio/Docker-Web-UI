@@ -3,13 +3,14 @@
 	flex-direction:column;
 }
 .app-header {
-	background-color:#C03221;
+	/*background-color:#C03221;*/
+	background-color:var(--color-1);
 	flex-grow:1;
 	padding:20px;
 }
 .app-header h1{
 	font-weight: bold;
-	color:black;
+	color:var(--color-6);
 }
 
 .app-content{

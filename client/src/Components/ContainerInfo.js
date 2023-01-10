@@ -2,7 +2,7 @@ import React, {useState,useEffect} from 'react'
 import axios from 'axios'
 import {Link} from "react-router-dom"
 import {useParams} from 'react-router-dom';
-import './ContainerLogs.css'
+import './ContainerInfo.css'
 
 
 const ContainerInfo = ()=>{
@@ -17,12 +17,13 @@ const ContainerInfo = ()=>{
 		axios.get(`/container_info/${cid}`,{signal:controller.signal})
 			.then(response=>{
         set_container_info({
-          name:response.data.Name,
+          name:response.data.Name.slice(1),
           id:response.data.Id,
+          image_name:response.data.Config.Image,
           image:response.data.Image,
           cstatus:response.data.State.Status,
           running:response.data.State.Running,
-          started:response.data.State.StartedAt,
+          started: new Date(response.data.State.StartedAt).toLocaleString("en-US"),
           pid:response.data.State.Pid,
           path:response.data.Path,
           log_path:response.data.LogPath,
@@ -51,7 +52,11 @@ const ContainerInfo = ()=>{
             <td><p>{container_info.name}</p></td>
           </tr>
           <tr>
-            <td><p>Image</p></td>
+            <td><p>Image Name</p></td>
+            <td><p>{container_info.image_name}</p></td>
+          </tr>
+          <tr>
+            <td><p>Image ID</p></td>
             <td><p>{container_info.image}</p></td>
           </tr>
           <tr>
@@ -74,19 +79,7 @@ const ContainerInfo = ()=>{
             <td><p>Path</p></td>
             <td><p>{container_info.path}</p></td>
           </tr>
-          <tr>
-            <td><p>Log Path</p></td>
-            <td><p>{container_info.log_path}</p></td>
-          </tr>
-          <tr>
-            <td><p>Host Name Path</p></td>
-            <td><p>{container_info.host_name_path}</p></td>
-          </tr>
-          <tr>
-            <td><p>Hosts Path</p></td>
-            <td><p>{container_info.hosts_path}</p></td>
-          </tr>
-        </table>
+         </table>
 			</div>
 		}
 		</div>

@@ -37,7 +37,7 @@ const Container2Stats = () => {
 					    mem_usage:`${calculate_memory_usage(response.data)}%`,
 					    network_i:`${response.data.ni} bytes`,
 					    network_o:`${response.data.no} bytes`,
-              time: new Date(),
+              time: new Date().toLocaleString("en-US"),
             }
 					  append_file_data(old_file_data => [...old_file_data, file_data_entry])
 					  counter+=1

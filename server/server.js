@@ -11,6 +11,21 @@ const PORT = 5000;
 const HOST = '0.0.0.0';
 const app = express();
 
+const request_log = (cid) =>{
+  const container = docker.getContainer(cid);
+  container.logs({
+    follow:true,
+    stdout:true,
+    stderr:true
+  }).then((stream)=>{
+    stream.on('data',(chunk)=>{
+      io.emit("container_log_sent",chunk.toString('utf8'))
+    })
+    stream.on('error',(error)=>{console.log(error)})
+  })
+}
+
+
 const containerLogs = (container,res)=>{
 	let chunks = "";
 
@@ -125,4 +140,5 @@ io.on("connection", (socket)=>{
 	socket.on("start_container", (cid)=>{start_container(cid)});
 	socket.on("stop_container", (cid)=>{stop_container(cid)});
 	socket.on("delete_container", (cid)=>{delete_container(cid)});
+  socket.on("request_container_log", (cid)=>{request_log(cid)});
 });

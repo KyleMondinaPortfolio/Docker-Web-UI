@@ -16,6 +16,27 @@ const Containers = ()=>{
 	const [selected_container, select_container] = useState("")
 	const [selected_container_state, set_selected_container_state] = useState("")
 
+  //new container controlls
+  const [selected_containers,update_selected_containers] = useState([])
+  const [containers_state,update_containers_state] = useState("unset")
+  
+  useEffect(()=>{
+    console.log(selected_containers)
+  },[selected_containers])
+  useEffect(()=>{
+    console.log(containers_state)
+  },[containers_state])
+
+  const add_selected_container = (cid) =>{
+    update_selected_containers(containers=>[...containers,cid])
+  }
+  const remove_selected_container = (cid) =>{
+    update_selected_containers(containers=>containers.filter(container=>container!==cid))
+  }
+  const set_containers_type = (container_state)=>{
+    update_containers_state(container_state)
+  }
+
   useEffect(()=>{
     //fetch containers from the server, controller is present to prevent page from fetching data when not opened
     let controller = new AbortController();
@@ -44,6 +65,13 @@ const Containers = ()=>{
           select_container = {select_container} 
           selected_container_state = {selected_container_state}
           set_selected_container_state = {set_selected_container_state}
+
+          selected_containers  = {selected_containers}
+          add_selected_container = {add_selected_container}
+          remove_selected_container = {remove_selected_container} 
+          containers_state = {containers_state}
+          set_containers_type = {set_containers_type}
+
         />
       }
     </div>
@@ -52,7 +80,19 @@ const Containers = ()=>{
 
 //----------Child Components ------------------
 
-const ContainersLoaded = ({containers,selected_container,select_container,selected_container_state, set_selected_container_state}) =>{
+const ContainersLoaded = ({
+                            containers,
+                            selected_container,
+                            select_container,
+                            selected_container_state, 
+                            set_selected_container_state,
+
+                            selected_containers, 
+                            add_selected_container, 
+                            remove_selected_container, 
+                            containers_state, 
+                            set_containers_type 
+                          }) =>{
 
   const start_button = (selected_container, selected_container_state)=>{
       let disabled = true;
@@ -128,6 +168,12 @@ const ContainersLoaded = ({containers,selected_container,select_container,select
               set_selected_container_state = {set_selected_container_state}
               key = {container.cid} 
               container = {container}
+
+              selected_containers  = {selected_containers}
+              add_selected_container = {add_selected_container}
+              remove_selected_container = {remove_selected_container} 
+              containers_state = {containers_state}
+              set_containers_type = {set_containers_type}
             />)
           })}
         </tbody>
@@ -158,9 +204,27 @@ const TableRow = (props) => {
   const select_container = props.select_container
   const selected_container_state = props.selected_container_state
   const set_selected_container_state = props.set_selected_container_state
+
+  const selected_containers = props.selected_containers 
+  const add_selected_container = props.add_selected_container
+  const remove_selected_container = props.remove_selected_container
+  const containers_state = props.containers_state
+  const set_containers_type = props.set_containers_type
+
 	return(
 		<tr>
       <td><input type="radio" id = {cid} name="optradio" onClick ={()=>{select_container(cid); set_selected_container_state(cstate)}}></input></td>
+      <td>
+        <SelectButton
+          cid = {cid}
+          selected_containers = {selected_containers}
+          add_selected_container = {add_selected_container}
+          remove_selected_container = {remove_selected_container}
+          container_state = {cstate}
+          containers_state = {containers_state}
+          set_containers_type = {set_containers_type}
+        />
+      </td>
 			<td class = "container-name">
 				<Link style={{textDecoration:'none', color: 'black'}} to ={`/container/${cid}/${cstate}/${cname}`}>{cname}</Link>	
 			</td>
@@ -170,5 +234,51 @@ const TableRow = (props) => {
 		</tr>
 	)
 }
+
+const SelectButton = (props)=>{
+
+  const cid = props.cid
+  
+  const selected_containers = props.selected_containers
+  const add_selected_container = props.add_selected_container
+  const remove_selected_container = props.remove_selected_container
+
+  const container_state = props.container_state
+  const containers_state = props.containers_state
+  const set_containers_state = props.set_containers_type
+
+  const [disabled, set_disabled] = useState(!(containers_state === "unset"))
+  const [checked, set_checked] = useState(false)
+
+  useEffect(()=>{
+    set_disabled(!(containers_state==="unset"||container_state === containers_state))
+  },[containers_state])
+
+  const button_clicked = () =>{
+    if(!disabled){
+      if(!checked){
+        if(selected_containers.length === 0){
+          console.log("array was intially zero so we should change")
+          set_containers_state(container_state)
+        }
+        add_selected_container(cid)
+        set_checked(true)
+      }else if(checked){
+        if(selected_containers.length === 1){
+          set_containers_state("unset")
+        }
+        remove_selected_container(cid)
+        set_checked(false)
+      }
+    }
+  }
+
+	return(
+		<div className ="select-button">
+      <input type="checkbox" disabled={disabled} checked={checked} onClick = {()=>{button_clicked()}} />
+		</div>
+	)
+}
+
 
 export default Containers

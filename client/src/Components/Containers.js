@@ -27,6 +27,9 @@ const Containers = ()=>{
     console.log(containers_state)
   },[containers_state])
 
+  const clear_containers = ()=>{
+    update_selected_containers([])
+  }
   const add_selected_container = (cid) =>{
     update_selected_containers(containers=>[...containers,cid])
   }
@@ -67,6 +70,7 @@ const Containers = ()=>{
           set_selected_container_state = {set_selected_container_state}
 
           selected_containers  = {selected_containers}
+          clear_containers = {clear_containers}
           add_selected_container = {add_selected_container}
           remove_selected_container = {remove_selected_container} 
           containers_state = {containers_state}
@@ -88,61 +92,107 @@ const ContainersLoaded = ({
                             set_selected_container_state,
 
                             selected_containers, 
+                            clear_containers,
                             add_selected_container, 
                             remove_selected_container, 
                             containers_state, 
                             set_containers_type 
                           }) =>{
 
-  const start_button = (selected_container, selected_container_state)=>{
-      let disabled = true;
-      console.log(`selected_container_state: ${selected_container_state}`)
-      if (selected_container === "" || selected_container_state === ""){
-        disabled = true;
+  const [checkboxes,clear_checkboxes] = useState(0)
+  const [start_btn_disabled, change_start_state] = useState(true)
+  const [stop_btn_disabled, change_stop_state] = useState(true)
+  const [delete_btn_disabled, change_delete_state] = useState(true)
+
+  useEffect(()=>{
+      if (containers_state === "unset"){
+        change_start_state(true)
+        change_stop_state(true)
+        change_delete_state(true)
       } 
-      else if (selected_container_state === "exited"){
-        disabled = false;
+      else if (containers_state === "exited"){
+        change_start_state(false)
+        change_delete_state(false)
       }
-      if (!disabled){
+      else if (containers_state === "running"){
+        change_stop_state(false)
+      }
+  },[containers_state])
+
+  const start_button = (selected_container, selected_container_state)=>{
+      //let disabled = true;
+      //console.log(`selected_container_state: ${selected_container_state}`)
+      //if (containers_state === "unset"){
+        //change_start_state(true)
+        //disabled = true;
+      //} 
+      //else if (containers_state === "exited"){
+        //disabled = false;
+        //change_start_state(false)
+      //}
+      if (!start_btn_disabled){
         console.log("start button enabled")
         set_selected_container_state("running")
-        socket.emit("start_container", selected_container)
+        selected_containers.forEach((container)=>{
+          let cid = container
+          socket.emit("start_container", cid)
+        })
+        clear_containers()
+        set_containers_type("unset")
+        clear_checkboxes(checkboxes+1)
+        
       }else{
         console.log("start button disabled")
       }
   }
 
   const stop_button = (selected_container, selected_container_state)=>{
-      let disabled = true;
-      console.log(`selected_container_state: ${selected_container_state}`)
-      if (selected_container === "" || selected_container_state === ""){
-        disabled = true;
-      } 
-      else if (selected_container_state === "running"){
-        disabled = false;
-      }
-      if (!disabled){
+      //let disabled = true;
+      //console.log(`selected_container_state: ${selected_container_state}`)
+      //if (containers_state === "unset"){
+        //change_stop_state(true)
+        //disabled = true;
+      //} 
+      //else if (containers_state === "running"){
+        //change_stop_state(false)
+        //disabled = false;
+      //}
+      if (!stop_btn_disabled){
         console.log("stop button enabled")
         set_selected_container_state("exited")
-        socket.emit("stop_container", selected_container)
+        selected_containers.forEach((container)=>{
+          let cid = container
+          socket.emit("stop_container", cid)
+        })
+        clear_containers()
+        set_containers_type("unset")
+        clear_checkboxes(checkboxes+1)
       }else{
         console.log("stop button disabled")
       }
   }
 
   const delete_button = (selected_container, selected_container_state)=>{
-      let disabled = true;
-      console.log(`selected_container_state: ${selected_container_state}`)
-      if (selected_container === "" || selected_container_state === ""){
-        disabled = true;
-      } 
-      else if (selected_container_state === "exited"){
-        disabled = false;
-      }
-      if (!disabled){
+      //let disabled = true;
+      //console.log(`selected_container_state: ${selected_container_state}`)
+      //if (containers_state === "unset"){
+        //change_delete_state(true)
+        //disabled = true;
+      //} 
+      //else if (containers_state === "exited"){
+        //change_delete_state(false)
+        //disabled = false;
+      //}
+      if (!delete_btn_disabled){
         console.log("delete button enabled")
         set_selected_container_state("")
-        socket.emit("delete_container", selected_container)
+        selected_containers.forEach((container)=>{
+          let cid = container
+          socket.emit("delete_container", cid)
+        })
+        clear_containers()
+        set_containers_type("unset")
+        clear_checkboxes(checkboxes+1)
       }else{
         console.log("delete button disabled")
       }
@@ -152,9 +202,9 @@ const ContainersLoaded = ({
   return(
     <div class = "containers_table">
       <div class = "container_controls">
-			  <button id="start_button" onClick = {()=>{start_button(selected_container,selected_container_state)}}> Start </button>
-			  <button id="stop_button" onClick = {()=>{stop_button(selected_container,selected_container_state)}}> Stop </button>
-			  <button id="delete_button" onClick = {()=>{delete_button(selected_container,selected_container_state)}}> Delete </button>
+			  <button id={start_btn_disabled ? "start_button_disabled":"start_button_enabled"} onClick = {()=>{start_button(selected_container,selected_container_state)}}> Start </button>
+			  <button id={stop_btn_disabled ? "stop_button_disabled":"stop_button_enabled"} onClick = {()=>{stop_button(selected_container,selected_container_state)}}> Stop </button>
+			  <button id={delete_btn_disabled ? "delete_button_disabled":"delete_button_enabled"} onClick = {()=>{delete_button(selected_container,selected_container_state)}}> Delete </button>
       </div>
       <table>
         <thead>
@@ -169,6 +219,7 @@ const ContainersLoaded = ({
               key = {container.cid} 
               container = {container}
 
+              checkboxes = {checkboxes}
               selected_containers  = {selected_containers}
               add_selected_container = {add_selected_container}
               remove_selected_container = {remove_selected_container} 
@@ -205,6 +256,7 @@ const TableRow = (props) => {
   const selected_container_state = props.selected_container_state
   const set_selected_container_state = props.set_selected_container_state
 
+  const checkboxes = props.checkboxes
   const selected_containers = props.selected_containers 
   const add_selected_container = props.add_selected_container
   const remove_selected_container = props.remove_selected_container
@@ -213,10 +265,10 @@ const TableRow = (props) => {
 
 	return(
 		<tr>
-      <td><input type="radio" id = {cid} name="optradio" onClick ={()=>{select_container(cid); set_selected_container_state(cstate)}}></input></td>
       <td>
         <SelectButton
           cid = {cid}
+          checkboxes = {checkboxes}
           selected_containers = {selected_containers}
           add_selected_container = {add_selected_container}
           remove_selected_container = {remove_selected_container}
@@ -238,7 +290,8 @@ const TableRow = (props) => {
 const SelectButton = (props)=>{
 
   const cid = props.cid
-  
+
+  const checkboxes = props.checkboxes
   const selected_containers = props.selected_containers
   const add_selected_container = props.add_selected_container
   const remove_selected_container = props.remove_selected_container
@@ -253,6 +306,10 @@ const SelectButton = (props)=>{
   useEffect(()=>{
     set_disabled(!(containers_state==="unset"||container_state === containers_state))
   },[containers_state])
+
+  useEffect(()=>{
+    set_checked(false)
+  },[checkboxes])
 
   const button_clicked = () =>{
     if(!disabled){

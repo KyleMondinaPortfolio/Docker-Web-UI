@@ -20,7 +20,11 @@
 	flex-grow:4;
 }
 
-.container_controls #start_button{
+.container_controls{
+  background-color:var(---color-2);
+}
+
+.container_controls #start_button_enabled{
   background-color:green;
   color:var(--color-6);
   padding: 5px 8px;
@@ -31,7 +35,7 @@
   font-weight:bold;
   margin:3px;
 }
-.container_controls #stop_button{
+.container_controls #stop_button_enabled{
   background-color:red;
   color:var(--color-6);
   padding: 5px 8px;
@@ -42,7 +46,7 @@
   font-weight:bold;
   margin:3px;
 }
-.container_controls #delete_button{
+.container_controls #delete_button_enabled{
   background-color:red;
   color:var(--color-6);
   padding: 5px 8px;
@@ -53,6 +57,43 @@
   font-weight:bold;
   margin:3px;
 }
+
+
+
+.container_controls #start_button_disabled{
+  background-color:#56fca2;
+  color:var(--color-6);
+  padding: 5px 8px;
+  text-align: center;
+  text-decoration: none;
+  display:inline-block;
+  font-size:17px;
+  font-weight:bold;
+  margin:3px;
+}
+.container_controls #stop_button_disabled{
+  background-color:#fe2c54;
+  color:var(--color-6);
+  padding: 5px 8px;
+  text-align: center;
+  text-decoration: none;
+  display:inline-block;
+  font-size:17px;
+  font-weight:bold;
+  margin:3px;
+}
+.container_controls #delete_button_disabled{
+  background-color:#fe2c54;
+  color:var(--color-6);
+  padding: 5px 8px;
+  text-align: center;
+  text-decoration: none;
+  display:inline-block;
+  font-size:17px;
+  font-weight:bold;
+  margin:3px;
+}
+
 
 tr {
 	background-color:var(--color-2);

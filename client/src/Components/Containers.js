@@ -110,7 +110,7 @@ const ContainersLoaded = ({
         change_stop_state(true)
         change_delete_state(true)
       } 
-      else if (containers_state === "exited"){
+      else if (containers_state === "exited" || containers_state === "created"){
         change_start_state(false)
         change_delete_state(false)
       }

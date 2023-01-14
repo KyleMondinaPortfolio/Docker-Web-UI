@@ -16,12 +16,13 @@
   color:var(--color-7);
 }
 
-.containers_table {
+.containers_loaded {
+  display:flex;
 	flex-grow:4;
+  flex-direction:column;
 }
 
 .container_controls{
-  color:var(---color-2);
   display:flex;
   flex-direction:row;
 }
@@ -35,7 +36,7 @@
   font-size:17px;
   font-weight:bold;
   margin:3px;
-  width:120px;
+  width:70px;
 }
 .container_controls #stop_button_enabled{
   background-color:red;
@@ -46,7 +47,7 @@
   font-size:17px;
   font-weight:bold;
   margin:3px;
-  width:120px;
+  width:70px;
 }
 .container_controls #delete_button_enabled{
   background-color:red;
@@ -57,7 +58,7 @@
   font-size:17px;
   font-weight:bold;
   margin:3px;
-  width:120px;
+  width:70px;
 }
 
 
@@ -71,14 +72,14 @@
   font-size:17px;
   font-weight:bold;
   margin:3px;
-  width:120px;
+  width:70px;
 }
 .container_controls #stop_button_enabled:hover{
   background-color:#fd5c63;
   color:var(--color-6);
   padding: 5px 8px;
   text-align: center;
-  width:120px;
+  width:70px;
   text-decoration: none;
   font-size:17px;
   font-weight:bold;
@@ -88,7 +89,8 @@
   background-color:#fd5c63;
   color:var(--color-6);
   padding: 5px 8px;
-  width:120px;
+  width:70px;
+  text-decoration: none;
   text-align: center;
   text-decoration: none;
   font-size:17px;
@@ -105,13 +107,13 @@
   font-size:17px;
   font-weight:bold;
   margin:3px;
-  width:120px;
+  width:70px;
 }
 .container_controls #stop_button_disabled{
   background-color:#d0d0d0;
   color:var(--color-6);
   padding: 5px 8px;
-  width:120px;
+  width:70px;
   text-align: center;
   text-decoration: none;
   font-size:17px;
@@ -121,7 +123,7 @@
 .container_controls #delete_button_disabled{
   background-color:#d0d0d0;
   color:var(--color-6);
-  width:120px;
+  width:70px;
   padding: 5px 8px;
   text-align: center;
   text-decoration: none;

@@ -1,17 +1,42 @@
 const express = require("express");
 const socket = require("socket.io");
 const  Docker  = require("dockerode");
-const stream = require("stream");
 const cors = require("cors");
 const docker = new Docker({socketPath:'/var/run/docker.sock'});
 const utils = require("./containerDataUtils.js") 
+const stream = require('stream');
 
 //Set up the http server
 const PORT = 5000;
 const HOST = '0.0.0.0';
 const app = express();
 
-const request_log = (cid) =>{
+const request_log = (cid)=>{
+  const container = docker.getContainer(cid);
+  const logStream = new stream.PassThrough();
+  logStream.on('data',(chunk)=>{
+    console.log(chunk.toString('utf8'));
+    io.emit("container_log_sent", chunk.toString('utf8'));
+  });
+  container.logs({
+    follow:true,
+    stdout:true,
+    stderr:true,
+  }, (err,stream)=>{
+    if(err){
+      return logger.error(err.message);
+    }
+    container.modem.demuxStream(stream,logStream,logStream);
+    stream.on('end', ()=>{
+      logStream.end('!stop!');
+    });
+    setTimeout(()=>{
+      stream.destroy();
+    },2000);
+  });
+}
+
+const request_log2 = (cid) =>{
   const container = docker.getContainer(cid);
   container.logs({
     follow:true,

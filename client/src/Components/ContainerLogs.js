@@ -11,16 +11,20 @@ const ContainerLogs = ()=>{
 	
 	const {cid} = useParams();
 	const {cstate} = useParams();
-  const [logs, updateLogs] = useState([]);
+  const [old_log, update_log] = useState("");
+  const [logs, updateLogs] = useState([""]);
 
   useEffect(()=>{
     socket.emit("request_container_log", cid);
   },[])
 
-  socket.on("container_log_sent",(chunks)=>{
-    const new_logs = chunks.split('\n');
-    updateLogs(logs=>[...logs,...new_logs]);
+  socket.off("container_log_sent").on("container_log_sent",(chunks)=>{
+      console.log(chunks)
+      updateLogs(logs=>{
+          return [...logs,chunks]
+      });
   })
+
 	return(
 		<div className ="container-logs-wrapper">
 		  <div className="container-logs">

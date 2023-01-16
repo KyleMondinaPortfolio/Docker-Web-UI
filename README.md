@@ -19,6 +19,17 @@ Docker Containers Monitor provides the user a web interface to quickly monitor, 
 ## Usage
 ### Monitor and Control Monitors
 Default page displays all docker containers as well as their status
+![](https://github.com/KyleMondinaPortfolio/Docker-Web-UI/monitor.gif)
+By selecting a container, user can either start, stop, or delete the container depending on its state
+
+* exited or created containers can either be stopped or deleted
+* running containers can be stopped
+
+User can select multiple containers that share the same state and can perform bulk actions with them
+
 ### Container Information
+User can view further information of a container such as image id, path, etc by clicking the container name
 ### Container Logs
+By clicking the logs tab, user can view the logs of a container
 ### Container Statistics
+By clicking the statistics tab, user can view container statistics such as cpu usage from the start of loading the statisis page. By clicking the download button, user recieves a txt file containing all the data samples from the start of loading the statisics page

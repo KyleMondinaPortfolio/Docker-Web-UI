@@ -1,14 +1,31 @@
 .container-info{
-	height:500px;
+  display:flex;
+  flex-direction:column;
 	background-color:var(--color-5);
 	border: 1px solid;
-	color:Black;
-	font-weight: bold;
-	padding:5px;
+	padding:60px;
 	Overflow-y:scroll;
 }
 
+.container-info-item{
+  background-color:var(--color-6);
+  display:flex;
+  flex-direction:row;
+  border:solid;
+  margin:5px;
+}
 
+.container-info-header{
+  color:var(--color-7);
+  margin:2px;
+  flex-grow:50;
+}
+
+.container-info-value{
+  color:var(--color-9);
+  flex-grow:1;
+  margin:2px;
+}
 
 
 .container-info-wrapper{

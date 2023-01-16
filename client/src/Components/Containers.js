@@ -1,6 +1,9 @@
 import React, {useState, useEffect} from 'react'
 import {Link} from "react-router-dom"
 import axios from 'axios'
+import PlayArrowIcon from '@mui/icons-material/PlayArrow';
+import StopIcon from '@mui/icons-material/Stop';
+import DeleteIcon from '@mui/icons-material/Delete';
 import io from 'socket.io-client'
 import './Containers.css'
 
@@ -202,9 +205,18 @@ const ContainersLoaded = ({
   return(
     <div class = "containers_loaded">
       <div class = "container_controls">
-			  <button id={start_btn_disabled ? "start_button_disabled":"start_button_enabled"} onClick = {()=>{start_button(selected_container,selected_container_state)}}> Start </button>
-			  <button id={stop_btn_disabled ? "stop_button_disabled":"stop_button_enabled"} onClick = {()=>{stop_button(selected_container,selected_container_state)}}> Stop </button>
-			  <button id={delete_btn_disabled ? "delete_button_disabled":"delete_button_enabled"} onClick = {()=>{delete_button(selected_container,selected_container_state)}}> Delete </button>
+			  <div id={start_btn_disabled ? "start_button_disabled":"start_button_enabled"} onClick = {()=>{start_button(selected_container,selected_container_state)}}> 
+          <PlayArrowIcon/>
+          <p>Start</p> 
+        </div>
+			  <div id={stop_btn_disabled ? "stop_button_disabled":"stop_button_enabled"} onClick = {()=>{stop_button(selected_container,selected_container_state)}}> 
+          <StopIcon/>
+          <p>Stop</p> 
+        </div>
+			  <div id={delete_btn_disabled ? "delete_button_disabled":"delete_button_enabled"} onClick = {()=>{delete_button(selected_container,selected_container_state)}}> 
+          <DeleteIcon/>
+          <p>Delete</p> 
+        </div>
       </div>
       <div class = "containers_table">
       <table>

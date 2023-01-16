@@ -47,6 +47,7 @@ const App = () => {
 	return (
 		<div class = "app-wrapper">
 		   <div class = "app-header">
+          <img src={require("./assets/advantest-logo.png")}/>
 		      <h1>Docker Containers Monitor:</h1>
 		   </div>
 	           <div class = "app-content">

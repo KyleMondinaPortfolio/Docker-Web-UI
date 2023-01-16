@@ -5,6 +5,7 @@ import {useParams} from 'react-router-dom';
 import ContainerLogs from './ContainerLogs.js'
 import ContainerStats from './ContainerStats.js'
 import Container2Stats from './Container2Stats.js'
+import ArrowBackIcon from '@mui/icons-material/ArrowBack'
 import './Container.css'
 
 const Container = (props) => {
@@ -14,7 +15,7 @@ const Container = (props) => {
 	return(
 		<div class = "container-wrapper">
 			<div class = "container-header">
-			   <p><Link style = {{textDecoration:'none', color:'white'}} to ={"/"}>Back</Link></p>	
+			   <p><Link style = {{textDecoration:'none', color:'white'}} to ={"/"}><ArrowBackIcon/></Link></p>	
 			   <h3>Container {cname}</h3>
 			</div>
 			<div class = "container-content">

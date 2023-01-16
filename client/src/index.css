@@ -1,13 +1,35 @@
-:root {
+/*:root {
   --color-1: #0D1B2A;
   --color-2: #253450;
   --color-3: #415A77;
   --color-4: #778DA9;
   --color-5: #E0E1DD;
+  --color-8: #F4F4F2;
   --color-6: white;
   --color-7: black;
+}*/
+
+:root {
+  /* darkest */
+  --color-1: #880808;
+  /* dark */
+  --color-2: #800022;
+  /* regular */
+  --color-3: #940128;
+  /* light  */
+  --color-4: #A60029;
+  /* ivory  */
+  --color-5: #E0E1DD;
+  /* light ivory  */
   --color-8: #F4F4F2;
+
+  --color-6: white;
+  --color-7: black;
+
+  /* disabled */
+  --color-9: #A0A0A0;
 }
+
 
 body {
   margin: 0;

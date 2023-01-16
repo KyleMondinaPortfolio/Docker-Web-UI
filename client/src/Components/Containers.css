@@ -2,10 +2,7 @@
 	flex-direction:column;
 	justify-content:center;
 	display:flex;
-	flex-grow:1;
-}
-
-.containers h2{
+	flex-grow:1; } .containers h2{
 	flex-grow:1;
 	font-weight:bold;
   color:var(--color-7);
@@ -28,6 +25,10 @@
 }
 
 .container_controls #start_button_enabled{
+  display:flex;
+  flex-direction:row;
+  height:17px;
+  align-items:center;
   background-color:green;
   color:var(--color-6);
   padding: 5px 8px;
@@ -39,6 +40,10 @@
   width:70px;
 }
 .container_controls #stop_button_enabled{
+  height:17px;
+  display:flex;
+  align-items:center;
+  flex-direction:row;
   background-color:red;
   color:var(--color-6);
   padding: 5px 8px;
@@ -50,6 +55,10 @@
   width:70px;
 }
 .container_controls #delete_button_enabled{
+  height:17px;
+  display:flex;
+  align-items:center;
+  flex-direction:row;
   background-color:red;
   color:var(--color-6);
   padding: 5px 8px;
@@ -58,12 +67,16 @@
   font-size:17px;
   font-weight:bold;
   margin:3px;
-  width:70px;
+  width:80px;
 }
 
 
 
 .container_controls #start_button_enabled:hover{
+  height:17px;
+  display:flex;
+  align-items:center;
+  flex-direction:row;
   background-color:#56fca2;
   color:var(--color-6);
   padding: 5px 8px;
@@ -75,6 +88,10 @@
   width:70px;
 }
 .container_controls #stop_button_enabled:hover{
+  display:flex;
+  height:17px;
+  align-items:center;
+  flex-direction:row;
   background-color:#fd5c63;
   color:var(--color-6);
   padding: 5px 8px;
@@ -86,10 +103,14 @@
   margin:3px;
 }
 .container_controls #delete_button_enabled:hover{
+  display:flex;
+  height:17px;
+  align-items:center;
+  flex-direction:row;
   background-color:#fd5c63;
   color:var(--color-6);
   padding: 5px 8px;
-  width:70px;
+  width:80px;
   text-decoration: none;
   text-align: center;
   text-decoration: none;
@@ -99,8 +120,12 @@
 }
 
 .container_controls #start_button_disabled{
-  background-color:#d0d0d0;
+  display:flex;
+  height:17px;
+  align-items:center;
+  flex-direction:row;
   color:var(--color-6);
+  background-color:var(--color-9);
   padding: 5px 8px;
   text-align: center;
   text-decoration: none;
@@ -110,8 +135,12 @@
   width:70px;
 }
 .container_controls #stop_button_disabled{
-  background-color:#d0d0d0;
+  display:flex;
+  height:17px;
+  align-items:center;
+  flex-direction:row;
   color:var(--color-6);
+  background-color:var(--color-9);
   padding: 5px 8px;
   width:70px;
   text-align: center;
@@ -121,9 +150,13 @@
   margin:3px;
 }
 .container_controls #delete_button_disabled{
-  background-color:#d0d0d0;
+  display:flex;
+  height:17px;
   color:var(--color-6);
-  width:70px;
+  background-color:var(--color-9);
+  align-items:center;
+  flex-direction:row;
+  width:80px;
   padding: 5px 8px;
   text-align: center;
   text-decoration: none;

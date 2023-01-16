@@ -46,40 +46,38 @@ const ContainerInfo = ()=>{
 		{(Object.keys(container_info).length===0)
 			?<h4>Fetching Container Info...</h4>
 			:<div className="container-info">
-        <table>
-          <tr>
-            <td><p>Name</p></td>
-            <td><p>{container_info.name}</p></td>
-          </tr>
-          <tr>
-            <td><p>Image Name</p></td>
-            <td><p>{container_info.image_name}</p></td>
-          </tr>
-          <tr>
-            <td><p>Image ID</p></td>
-            <td><p>{container_info.image}</p></td>
-          </tr>
-          <tr>
-            <td><p>Status</p></td>
-            <td><p>{container_info.cstatus}</p></td>
-          </tr>
-          <tr>
-            <td><p>Running</p></td>
-            <td><p>{container_info.running.toString()}</p></td>
-          </tr>
-          <tr>
-            <td><p>Started At:</p></td>
-            <td><p>{container_info.started}</p></td>
-          </tr>
-          <tr>
-            <td><p>PID</p></td>
-            <td><p>{container_info.pid}</p></td>
-          </tr>
-          <tr>
-            <td><p>Path</p></td>
-            <td><p>{container_info.path}</p></td>
-          </tr>
-         </table>
+        <div className = "container-info-item">
+          <p className="container-info-header">Name</p>
+          <p className="container-info-value">{container_info.name}</p>
+        </div>
+        <div className = "container-info-item">
+          <p className="container-info-header">Image Name</p>
+          <p className="container-info-value">{container_info.image_name}</p>
+        </div>
+        <div className = "container-info-item">
+          <p className="container-info-header">Image ID</p>
+          <p className="container-info-value">{container_info.image}</p>
+        </div>
+        <div className = "container-info-item">
+          <p className="container-info-header">Status</p>
+          <p className="container-info-value">{container_info.cstatus}</p>
+        </div>
+        <div className = "container-info-item">
+          <p className="container-info-header">Running</p>
+          <p className="container-info-value">{container_info.running.toString()}</p>
+        </div>
+        <div className = "container-info-item">
+          <p className="container-info-header">Started At:</p>
+          <p className="container-info-value">{container_info.started}</p>
+        </div>
+        <div className = "container-info-item">
+          <p className="container-info-header">PID</p>
+          <p className="container-info-value">{container_info.pid}</p>
+        </div>
+        <div className = "container-info-item">
+          <p className="container-info-header">Path</p>
+          <p className="container-info-value">{container_info.path}</p>
+        </div>
 			</div>
 		}
 		</div>

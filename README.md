@@ -33,24 +33,29 @@ By selecting a container, user can either start, stop, or delete the container d
 ![](https://github.com/KyleMondinaPortfolio/Docker-Web-UI/blob/main/selecting.gif)
 
 ```
-User can select multiple containers that share the same state and can perform bulk actions with them
+User can select multiple containers that share the same state 
+and can perform bulk actions with them
 ```
 ![](https://github.com/KyleMondinaPortfolio/Docker-Web-UI/blob/main/bulkselecting.gif)
 
 ### Container Information
 ```
-User can view further information of a container such as image id, path, etc by clicking the container name
+User can view further information of a container such as 
+image id, path, etc by clicking the container name
 ```
 ![](https://github.com/KyleMondinaPortfolio/Docker-Web-UI/blob/main/info.gif)
 
 ### Container Logs
 ```
- By clicking the logs tab, user can view the logs of a container
+By clicking the logs tab, user can view the logs of a container
 ```
 ![](https://github.com/KyleMondinaPortfolio/Docker-Web-UI/blob/main/logs.gif)
 
 ### Container Statistics
 ```
- By clicking the statistics tab, user can view container statistics such as cpu usage from the start of loading the statisis page. By clicking the download button, user recieves a txt file containing all the data samples from the start of loading the statisics page
+By clicking the statistics tab, user can view container statistics such as 
+cpu usage from the start of loading the statisis page. 
+By clicking the download button, user recieves a txt file containing all 
+the data samples from the start of loading the statisics page
 ```
 ![](https://github.com/KyleMondinaPortfolio/Docker-Web-UI/blob/main/statistics-1.gif)

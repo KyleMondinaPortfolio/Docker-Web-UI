@@ -51,6 +51,10 @@ const ContainerInfo = ()=>{
           <p className="container-info-value">{container_info.name}</p>
         </div>
         <div className = "container-info-item">
+          <p className="container-info-header">ID</p>
+          <p className="container-info-value">{container_info.id}</p>
+        </div>
+        <div className = "container-info-item">
           <p className="container-info-header">Image Name</p>
           <p className="container-info-value">{container_info.image_name}</p>
         </div>

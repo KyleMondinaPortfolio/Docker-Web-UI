@@ -15,7 +15,7 @@ const Container = (props) => {
 	return(
 		<div class = "container-wrapper">
 			<div class = "container-header">
-			   <p><Link style = {{textDecoration:'none', color:'white'}} to ={"/"}><ArrowBackIcon/></Link></p>	
+			   <p><Link style = {{textDecoration:'none', color:'white'}} to ={"/"}><ArrowBackIcon fontSize="large"/></Link></p>	
 			   <h3>Container {cname}</h3>
 			</div>
 			<div class = "container-content">

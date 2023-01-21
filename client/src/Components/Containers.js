@@ -224,7 +224,7 @@ const ContainersLoaded = ({
           <TableHeader/>
         </thead>
         <tbody>
-          {containers.filter((container)=>container.cimage!=="advantest-kylemondina/node-docker-ui").map((container)=>{
+          {containers.filter((container)=>container.cimage!=="advantest-node-docker-ui").map((container)=>{
             return(<TableRow 
               select_container={select_container} 
               selected_container_state={selected_container_state} 

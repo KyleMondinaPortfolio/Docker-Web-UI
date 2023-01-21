@@ -9,11 +9,11 @@ Docker Containers Monitor provides the user a web interface to quickly monitor, 
 ### Building the Docker Image
 ```sh
   cd server
-  docker build . -t <image tag>
+  docker build . -t advantest-node-docker-ui
 ```
 ### Running with Docker
 ```sh
-  docker run -d -p <port>:5000 -v /var/run/docker.sock:/var/run/docker.sock <image tag>
+  docker run -d -p <port>:5000 -v /var/run/docker.sock:/var/run/docker.sock advantest-node-docker-ui
 ```
 
 ## Usage
